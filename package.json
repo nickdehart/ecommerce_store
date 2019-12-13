@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.2",
+    "@zeit/next-css": "^1.0.1",
+    "bootstrap": "^4.4.1",
     "next": "9.1.5",
+    "next-routes": "^1.4.2",
     "react": "16.12.0",
+    "react-async-script-loader": "^0.3.0",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "16.12.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2"
   }
 }
