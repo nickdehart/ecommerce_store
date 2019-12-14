@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from '../../routes'
+import {Link} from '../../server/routes'
 import config from '../../config'
 
 class Button extends Component {

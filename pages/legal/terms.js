@@ -1,4 +1,4 @@
-import {Link} from '../../routes'
+import {Link} from '../../server/routes'
 
 const Terms = ({config}) => (
   <div>

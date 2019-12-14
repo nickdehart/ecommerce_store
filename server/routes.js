@@ -9,7 +9,3 @@ routes
 .add({ name: 'terms', pattern: '/legal/terms', page: '/legal/terms' })
 .add('products')
 .add({ name: 'product', pattern: '/products/:id', page: '/products/product' })
-
-// .add('user', '/user/:id', 'profile')
-// .add('/:noname/:lang(en|es)/:wow+', 'complex')
-// .add({name: 'beta', pattern: '/v3', page: 'v3'})

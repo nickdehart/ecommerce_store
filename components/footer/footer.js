@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from '../../routes'
+import {Link} from '../../server/routes'
 import style from './footer.style'
 
 const Footer = ({config}) => (

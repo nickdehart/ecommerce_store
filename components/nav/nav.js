@@ -1,4 +1,4 @@
-import {Link} from '../../routes'
+import {Link} from '../../server/routes'
 import { Navbar, Nav } from 'react-bootstrap'
 import style from './nav.style'
 
