@@ -1,10 +1,13 @@
 const products = 
 [
    {
-      name: 'Winter body', 
-      assets: '/item1', 
-      price: 109.99,
+      name: 'Winter body', // Name of product
+      assets: '/item1',    // Path of product images
+      price: 109.99,       // Sell price
+      multiplier: 2.5,     // What price used to be before sale
+                           // Short description
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
+                           // image filenames in assets folder
       images: [
          '/item1.jpg', 
          '/item2.jpg', 
@@ -17,6 +20,7 @@ const products =
       name: 'Adidas', 
       assets: '/item2', 
       price: 79.99,
+      multiplier: 2.5,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
       images: [
          '/item2.jpg', 
@@ -30,6 +34,7 @@ const products =
       name: 'Vans', 
       assets: '/item3', 
       price: 119.99,
+      multiplier: 2.5,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
       images: [
          '/item3.jpg', 
@@ -56,6 +61,7 @@ const products =
       name: 'Cropped-sho', 
       assets: '/item5', 
       price: 159.99,
+      multiplier: 2.5,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
       images: [
          '/item5.jpg', 
@@ -69,6 +75,7 @@ const products =
       name: 'Cropped-sho', 
       assets: '/item5', 
       price: 159.99,
+      multiplier: 2.5,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
       images: [
          '/item5.jpg', 

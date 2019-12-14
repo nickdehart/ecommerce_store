@@ -19,6 +19,26 @@ class Product extends React.Component {
     };
   }
 
+  addToCart = (e, product) => {
+    e.preventDefault();
+    const { cartCount, setCartCount } = this.props;
+    let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
+    product.quantity = parseInt(e.target.quantity.value);
+
+    for(var i = 0; i < cart.length; i++){
+      if(product.name === cart[i].name){
+        cart[i].quantity += product.quantity
+        setCartCount(cart[i].quantity)
+        sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+        return
+      }
+    }
+
+    setCartCount(cartCount + product.quantity)
+    cart.push(product)
+    sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+  }
+
   static getInitialProps({query}){
     return {query}
   }
@@ -70,14 +90,14 @@ class Product extends React.Component {
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-3">
           <h1>{product.name}</h1>
           <div>{stars}&nbsp;(112)</div>
-          <p className="price"><s>{`$${Math.floor(product.price * 2.5)}.99`}</s>${product.price}</p>
+          <p className="price mt-2">{product.multiplier && <s>{`$${Math.floor(product.price * product.multiplier)}.99`}</s>}${product.price}</p>
           <p>{product.description}</p>
-          <Form onSubmit={() => {event.preventDefault(); console.log('trying to submit')}} role="form">
+          <Form onSubmit={(e) => this.addToCart(e, product)} role="form">
             <FormGroup className="mb-3">
               <FormLabel>Quantity:</FormLabel>
               <FormControl
                 className="col-3"
-                name="search"
+                name="quantity"
                 type="number"
                 defaultValue={1}
                 min={1}
@@ -100,13 +120,13 @@ class Product extends React.Component {
 
       <style jsx>{`
         s {
-          color: black;
+          color: #333;
           margin: 0px 15px 0px 0px;
         }
         .price {
           font-weight: 600;
           font-size: 1.25em;
-          color: red;
+          color: ${product.multiplier ? 'red' : '#333'};
         }
         .product {
           margin-top: 20px;

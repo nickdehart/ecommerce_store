@@ -2,6 +2,13 @@ import products from './products'
 
 const config = {
    title: "Ecommerce Store",
+   mongo: {
+      url: 'mongodb://localhost:27017',
+      db: 'ecommerce',
+      collections: {
+         contact: 'messages'
+      }
+   },
    theme: {
       color: '#ee6e73'
    },

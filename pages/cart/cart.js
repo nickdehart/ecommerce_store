@@ -5,7 +5,7 @@ const Cart = ({config}) => (
     <div className="cart-content">
       <p>Your cart is currently empty.</p>
       <div>
-      <Button>Continue Shopping</Button>
+      <Button href="/products">Continue Shopping</Button>
       </div>
     </div>
 

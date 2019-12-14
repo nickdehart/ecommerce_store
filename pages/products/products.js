@@ -29,7 +29,7 @@ const Products = ({config}) => {
         <div className="container items">
         {config.products.filter(product => product.name.toUpperCase().includes(phrase.toUpperCase()))
         .map((item, index) => {
-          return (<ProductCard key={`product-${index}`} item={item}/>)
+          return (<ProductCard key={`product-${index}`} item={item} config={config}/>)
         })}
         </div>
       </div>

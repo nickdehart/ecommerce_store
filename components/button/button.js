@@ -30,15 +30,15 @@ class Button extends Component {
    }
    
    render() {
-      const { href, variant, fullWidth, children } = this.props;
+      const { href, variant, fullWidth, children, disabled } = this.props;
       return (
       <React.Fragment>
          { variant == 'button' ?
             <>
                { fullWidth ?
-                  <button className="custom-style" type="submit">{children}</button>
+                  <button className="custom-style" type="submit" disabled={disabled}>{children}</button>
                   :
-                  <button className="button-style" type="submit">{children}</button>
+                  <button className="button-style" type="submit" disabled={disabled}>{children}</button>
                }
             </>
             :
@@ -53,7 +53,7 @@ class Button extends Component {
                padding: 1rem 2rem;
                margin-top: 27px;
                color: #fff;
-               background: ${config.theme.color};
+               background: ${disabled ? this.pSBC ( 0.42, config.theme.color ) : config.theme.color};
                text-decoration: none;
                text-transform: uppercase;
                letter-spacing: 0.08em;
@@ -71,7 +71,7 @@ class Button extends Component {
                display: flex; 
                justify-content: center;
                width: 100%;
-               background-color: ${config.theme.color};
+               background-color: ${disabled ? this.pSBC ( 0.42, config.theme.color ) : config.theme.color};
                color: white;
                text-decoration: none;
                text-transform: uppercase;
