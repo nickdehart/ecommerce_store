@@ -1,5 +1,5 @@
 ### E-Commerce Store
-##### A configurable store application that can easily be changed to sell a variety of products.
+##### A configurable, mobile first, store application that can easily be changed to sell a variety of products.
 
 - Developed with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app)
 
