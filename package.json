@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=sandbox node ./server",
+    "dev": "SET NODE_ENV=sandbox && node ./server",
     "build": "next build",
-    "start": "NODE_ENV=production node ./server"
+    "start": "SET NODE_ENV=production && node ./server"
   },
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.2",
