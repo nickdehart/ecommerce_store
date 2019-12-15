@@ -1,78 +1,121 @@
+import { FormControl, InputGroup, Alert } from 'react-bootstrap'
+import Button from '../components/button'
 
-const Home = ({config}) => (
-  <>
-    <div className="hero">
-      <h1 className="title">Welcome to Next.js!</h1>
-      <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
-      </p>
+const handleSubmit = (e, setShow) => {
+  e.preventDefault();
+  fetch('/api/subscribe', {
+     method: 'POST',
+     headers: {
+           'Accept': 'application/json',
+           'Content-Type': 'application/json'
+     }, 
+     body: JSON.stringify({
+          email: e.target.email.value,
+          date: new Date()
+        })
+     })
+     .then(response => {
+        if(response.status === 200)
+           setShow(1)
+        else
+           setShow(-1)
+     })
+     .catch(error => console.log(error))
+}
 
-      <div className="row">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Learn more about Next.js in the documentation.</p>
-        </a>
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Next.js Learn &rarr;</h3>
-          <p>Learn about Next.js by following an interactive tutorial!</p>
-        </a>
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Find other example boilerplates on the Next.js GitHub.</p>
-        </a>
+const Home = ({config}) => {
+  const [show, setShow] = React.useState(0);
+
+  return (
+    <>
+      {config.home.promo &&
+        <div className="banner">
+          <p className="promo">{config.home.promo}</p>
+          {config.home.reason && <p className="promo-sub">{config.home.reason}</p>}
+          <p className="promo-sub">IN EFFECT NOW!</p>
+          <Button href="/products">Shop Now</Button>
+        </div>
+      }
+      <div className="container">
+          {config.home.showSubscribe &&
+            <div className="subscribe">
+              <p className="sub-header">
+                Subscribe to our newsletter
+              </p>
+              <p style={{textAlign: 'center'}}>Sign up to our newsletter for promotions and savings!</p>
+              <Alert show={show === 1} variant="success">
+               Success! Thank you for subscribing!
+              </Alert>
+              <Alert show={show === -1} variant="danger">
+                Failure! Something went wrong. Please refresh and try again.
+              </Alert>
+              <form onSubmit={(e) => handleSubmit(e, setShow)} className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-6 mx-auto">
+                <InputGroup className="mb-3">
+                  <FormControl
+                    placeholder="Email Address"
+                    name="email"
+                    type="email"
+                  />
+                  <InputGroup.Append>
+                    <button className="sub-button" type="submit">Subscribe</button>
+                  </InputGroup.Append>
+                </InputGroup>
+              </form>
+            </div>
+          }
       </div>
-    </div>
 
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
-  </>
-)
+      <style jsx>{`
+        .banner {
+          height: 50vh;
+          background-image: url(${config.home.banner});
+          background-position: center;
+          background-size: cover;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center
+        }
+        .promo {
+          font-size: 3em;
+          margin-bottom: 8px;
+          color: white;
+          text-transform: uppercase;
+          font-weight: 600;
+          text-align: center;
+        }
+        .promo-sub {
+          font-size: 1.5em;
+          margin-bottom: 20px;
+          color: white;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+        .subscribe {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .sub-header {
+          font-size: 1.25em;
+          margin-bottom: 20px;
+          color: black;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+        .sub-button {
+          color: white;
+          background: ${config.theme.color};
+          font-size: small;
+          font-weight: 600;
+          text-transform: uppercase;
+          border: 0px;
+        }
+      `}</style>
+    </>
+  )
+}
 
 export default Home

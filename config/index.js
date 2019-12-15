@@ -6,11 +6,18 @@ const config = {
       url: 'mongodb://localhost:27017',
       db: 'ecommerce',
       collections: {
-         contact: 'messages'
+         contact: 'messages',
+         subscribe: 'subscribe'
       }
    },
    theme: {
-      color: '#ee6e73'
+      color: '#ee6e73',
+   },
+   home: {
+      banner: '/banner.jpg',
+      promo: 'Up to 60% off',
+      reason: 'Cyber Week Sale',
+      showSubscribe: true,
    },
    promotion: {
       text: "CHRISTMAS SALE + FREE SHIPPING ON ORDERS OVER $30",
