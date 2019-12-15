@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const sanitize = require('mongo-sanitize');
 const config = require('../../config');
 
 export default (req, res) => {
@@ -13,6 +14,9 @@ export default (req, res) => {
          const db = client.db(config.default.mongo.db);
          const collection = db.collection(config.default.mongo.collections.contact);
          try {
+            Object.keys(req.body).forEach(param => {
+               req.body[param] = sanitize(req.body[param])
+            })
             collection.insertOne(req.body)
             res.status(200).send('success')
          } catch (e) {
@@ -23,8 +27,8 @@ export default (req, res) => {
          
       })
    } else {
-      res.status(400).send({
-         message: 'Not POST'
+      res.status(404).send({
+         message: 'Not Found'
       });
    }
 }

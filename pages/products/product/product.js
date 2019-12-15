@@ -115,6 +115,31 @@ class Product extends React.Component {
               />
             </FormGroup>
           </Form>
+          <div className="table-responsive">
+            <h4><b>Buy More, Pay Less!</b></h4>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Line Item Quantity</th>
+                  <th scope="col">Discount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2</td>
+                  <td>10%</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>15%</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>20%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 

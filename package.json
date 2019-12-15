@@ -11,6 +11,7 @@
     "@paypal/checkout-server-sdk": "^1.0.2",
     "@zeit/next-css": "^1.0.1",
     "bootstrap": "^4.4.1",
+    "mongo-sanitize": "^1.0.1",
     "mongodb": "^3.4.0",
     "next": "9.1.5",
     "next-routes": "^1.4.2",
