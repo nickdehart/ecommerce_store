@@ -5,6 +5,9 @@ const handler = routes.getRequestHandler(app)
  
 // Without express
 const {createServer} = require('http')
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.prepare().then(() => {
   createServer(handler).listen(3000)
 })

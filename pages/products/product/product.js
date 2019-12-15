@@ -3,14 +3,6 @@ import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
 
-const CLIENT = {
-  sandbox: 'xxxXXX',
-  production: 'xxxXXX',
-};
-const ENV = process.env.NODE_ENV === 'production'
-  ? 'production'
-  : 'sandbox';
-
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -71,13 +63,6 @@ class Product extends React.Component {
                     key={`star-${i}`}></i>)
     }
 
-    const onSuccess = (payment) =>
-      console.log('Successful payment!', payment);
-    const onError = (error) =>
-      console.log('Erroneous payment OR failed to load script!', error);
-    const onCancel = (data) =>
-      console.log('Cancelled payment!', data);
-
   return (
     <>
       <div className="container product">
@@ -113,14 +98,9 @@ class Product extends React.Component {
               />
               <Button variant="button" fullWidth={true}>Add To Cart</Button>
               <PaypalButton
-                client={CLIENT}
-                env={ENV}
                 commit={true}
                 currency={'USD'}
                 total={100}
-                onSuccess={onSuccess}
-                onError={onError}
-                onCancel={onCancel}
               />
             </FormGroup>
           </Form>

@@ -2,14 +2,6 @@ import Button from '../../components/button'
 import PaypalButton from '../../components/paypal';
 import CartTable from '../../components/cartTable';
 
-const CLIENT = {
-  sandbox: 'xxxXXX',
-  production: 'xxxXXX',
-};
-const ENV = process.env.NODE_ENV === 'production'
-  ? 'production'
-  : 'sandbox';
-
 class Cart extends React.Component {
   constructor(props) {
     super(props);
@@ -77,13 +69,6 @@ class Cart extends React.Component {
     const { config } = this.props;
     const { cart } = this.state;
 
-    const onSuccess = (payment) =>
-      console.log('Successful payment!', payment);
-    const onError = (error) =>
-      console.log('Erroneous payment OR failed to load script!', error);
-    const onCancel = (data) =>
-      console.log('Cancelled payment!', data);
-
     return (
     <>
       {cart.length === 0 ?
@@ -104,14 +89,9 @@ class Cart extends React.Component {
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto">
             {/* <Button variant="button" fullWidth={true}>Check Out</Button> */}
             <PaypalButton
-              client={CLIENT}
-              env={ENV}
               commit={true}
               currency={'USD'}
               total={100}
-              onSuccess={onSuccess}
-              onError={onError}
-              onCancel={onCancel}
             />
           </div>
         </div>

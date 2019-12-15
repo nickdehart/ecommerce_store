@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node ./server",
+    "dev": "NODE_ENV=sandbox node ./server",
     "build": "next build",
     "start": "NODE_ENV=production node ./server"
   },
@@ -11,6 +11,7 @@
     "@paypal/checkout-server-sdk": "^1.0.2",
     "@zeit/next-css": "^1.0.1",
     "bootstrap": "^4.4.1",
+    "dotenv": "^8.2.0",
     "mongo-sanitize": "^1.0.1",
     "mongodb": "^3.4.0",
     "next": "9.1.5",

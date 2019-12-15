@@ -11,12 +11,13 @@ class MyDocument extends Document {
   }
 
   render() {
+    let CLIENT_ID = process.env.CLIENT_ID;
     return (
       <Html>
         <Head />
          <body>
                <script
-                  src="https://www.paypal.com/sdk/js?client-id=sb">
+                  src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID ? CLIENT_ID : 'sb' }`}>
                </script>
                <Main />
                <NextScript />
