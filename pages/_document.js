@@ -16,7 +16,7 @@ class MyDocument extends Document {
         <Head />
          <body>
                <script
-                  src="https://www.paypal.com/sdk/js?client-id=Aex-2PPDHoqDX1samacjLWdJVb6g_PpwV4PmzWAcyxf-52Bq81O5GhhFUAklal-JT29WGKRWwuBCwdlD">
+                  src="https://www.paypal.com/sdk/js?client-id=CLIENT_ID">
                </script>
                <Main />
                <NextScript />
