@@ -3,6 +3,12 @@
 
 - Developed with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app)
 
+#### Mobile View:
+![alt text](./mobile.gif)
+
+#### Desktop View:
+![alt text](./desktop.gif)
+
 Install it and run:
 
 ```
