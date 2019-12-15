@@ -22,14 +22,54 @@ class Cart extends React.Component {
     const { cartCount } = this.props;
     if(cartCount > 0){
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
-      this.setState({cart: cart})
+      this.setState({cart: cart ? cart : []})
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.cartCount !== prevProps.cartCount) {
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
-      this.setState({cart: cart})
+      this.setState({cart: cart ? cart : []})
+    }
+  }
+
+  removeCartItem = (item) => {
+    const { cartCount, setCartCount } = this.props;
+    let newCartCount = cartCount - item.quantity;
+    setCartCount(newCartCount)
+
+    let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
+    if(!cart){
+      cart = []
+    }
+    cart = cart.filter((product) => {
+      return product.name !== item.name;
+    })
+    sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+  }
+
+  updateCartQuantity = (event, item) => {
+    event.preventDefault();
+    const { cartCount, setCartCount } = this.props;
+    let newQuantity = +event.target.quantity.value;
+
+    if(newQuantity !== item.quantity && newQuantity > 0){
+
+      let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
+      if(!cart){
+        cart = []
+      }
+      for(var i = 0; i < cart.length; i++){
+        if(cart[i].name === item.name){
+          let oldCartCount = cartCount - cart[i].quantity
+          let newCartCount = oldCartCount + newQuantity;
+          setCartCount(newCartCount)
+
+          cart[i].quantity = newQuantity;
+          sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+          return
+        }
+      }
     }
   }
   
@@ -55,7 +95,12 @@ class Cart extends React.Component {
         </div>
         :
         <div className="container my-5">
-          <CartTable cart={cart} config={config}/>
+          <CartTable 
+            cart={cart} 
+            config={config} 
+            remove={this.removeCartItem}
+            update={this.updateCartQuantity}
+          />
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto">
             {/* <Button variant="button" fullWidth={true}>Check Out</Button> */}
             <PaypalButton

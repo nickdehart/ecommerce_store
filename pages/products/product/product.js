@@ -25,6 +25,10 @@ class Product extends React.Component {
     let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
     product.quantity = parseInt(e.target.quantity.value);
 
+    if(!cart){
+      cart = [];
+    }
+
     for(var i = 0; i < cart.length; i++){
       if(product.name === cart[i].name){
         cart[i].quantity += product.quantity
@@ -35,7 +39,11 @@ class Product extends React.Component {
     }
 
     setCartCount(cartCount + product.quantity)
-    cart.push(product)
+    cart.push({
+      name: product.name,
+      number: product.number,
+      quantity: product.quantity
+    })
     sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
   }
 
@@ -51,6 +59,7 @@ class Product extends React.Component {
     for(var i = 0; i < config.products.length; i++){
       if(config.products[i].name.toLowerCase().replace(/[^A-Z0-9]/gi, '_') === query.id){
         product = config.products[i];
+        product.number = i;
         break;
       }
     }

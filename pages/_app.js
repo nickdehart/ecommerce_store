@@ -30,7 +30,7 @@ export default class MyApp extends App {
    }
 
    setCartCount = (num) => {
-     this.setState({cartCount: num})
+     this.setState({cartCount: +num})
    }
 
    render() {

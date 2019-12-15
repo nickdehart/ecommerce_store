@@ -30,7 +30,7 @@ const Navibar = ({ config, cartCount }) => {
             <Link route="/cart">
               <a className="cart">
                 <i className="fas fa-shopping-cart cart-icn"></i>
-                {cartCount > 0 && <span className="badge">{cartCount}</span>}
+                {cartCount > 0 && <span className="badge">{+cartCount}</span>}
               </a>
             </Link>
           </div>
