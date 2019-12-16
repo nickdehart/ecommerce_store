@@ -2,13 +2,26 @@ import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 
 import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
+import Review from '../../../components/review';
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeIndex: 0
+      activeIndex: 0,
+      data: {}
     };
+  }
+
+  componentDidMount() {
+    const { query } = this.props;
+
+    fetch(`/api/review?name=${query.id}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({data: data[0]})
+      })
+      .catch(error => console.log(error))
   }
 
   addToCart = (e, product) => {
@@ -45,7 +58,13 @@ class Product extends React.Component {
 
   render() {
     const { config, query } = this.props;
-    const { activeIndex } = this.state;
+    const { activeIndex, data } = this.state;
+    let dataExists = false
+    try {
+      dataExists = !(Object.keys(data).length === 0 && data.constructor === Object)
+    } catch(e) {
+
+    }
 
     let product;
     for(var i = 0; i < config.products.length; i++){
@@ -57,10 +76,12 @@ class Product extends React.Component {
     }
 
     let stars = [];
-    for(var i = 0; i < 5; i++) {
+    if(dataExists) {
+      for(var i = 0; i < data.avg; i++) {
       stars.push(<i className="fas fa-star" 
                     style={{color: config.theme.color}}
                     key={`star-${i}`}></i>)
+      }
     }
 
   return (
@@ -83,7 +104,7 @@ class Product extends React.Component {
         </div>
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-3">
           <h1>{product.name}</h1>
-          <div>{stars}&nbsp;(112)</div>
+          {dataExists && <div>{stars}&nbsp;{data.reviews && `(${data.reviews.length})`}</div>}
           <p className="price mt-2">{product.multiplier && <s>{`$${Math.floor(product.price * product.multiplier)}.99`}</s>}${product.price}</p>
           <p>{product.description}</p>
           <Form onSubmit={(e) => this.addToCart(e, product)} role="form">
@@ -131,6 +152,7 @@ class Product extends React.Component {
           </div>
         </div>
       </div>
+      <Review config={config} data={data} dataExists={dataExists} product={product.name}/>
 
       <style jsx>{`
         s {
