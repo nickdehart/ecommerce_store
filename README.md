@@ -10,6 +10,9 @@
 ![alt text](./desktop.gif)
 
 Install it and run:
+- Must create a .env file as it is needed for much of the API logic.
+   - sample.env will work for running in development
+   - MongoDB must be running
 
 ```
 yarn
