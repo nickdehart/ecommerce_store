@@ -1,84 +1,68 @@
 import Swal from 'sweetalert2'
+import { PayPalButton } from "react-paypal-button-v2";
 
-const CLIENT = {
-  sandbox: 'xxxXXX',
-  production: 'xxxXXX',
-};
-const ENV = process.env.NODE_ENV === 'production'
-  ? 'production'
-  : 'sandbox';
-
-class PaypalButton extends React.Component {
-
-   componentDidMount() {
-      const { commit, currency, total} = this.props;
-      console.log(total.toFixed(2))
-      paypal.Buttons({
-         createOrder: function() {
-            return fetch('/api/paypal/create-transaction', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              }, 
-              body: JSON.stringify({
-                  total: total.toFixed(2),
-              })
+const PaypalButton = ({total, cart}) => {
+  return (
+    <div>
+    <PayPalButton
+    createOrder={(data, actions) => {
+      return fetch('/api/paypal/create-transaction', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify({
+            total: total.toFixed(2),
+            cart: cart,
+        })
+      })
+      .then((response) => {return response.json()})
+      .then((data) => {return data.orderID})
+      .catch(error => console.log(error))
+    }}
+    onApprove={(data) => {
+      // Capture the funds from the transaction
+      return fetch('/api/paypal/capture-transaction', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ orderID: data.orderID })
+      })
+        .then((res) => { return res.json() })
+        .then((details) => {
+          if(details === 200){
+            Swal.fire(
+              'Success!',
+              'Transaction Approved.',
+              'success'
+            )
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: 'Please refresh and try again.'
             })
-            .then((response) => {return response.json()})
-            .then((data) => {return data.orderID})
-            .catch(error => console.log(error))
-          },
-          onApprove: function(data) {
-            console.log(data)
-            // This function captures the funds from the transaction.
-            return fetch('/api/paypal/capture-transaction', {
-              method: 'POST',
-              headers: {
-                'content-type': 'application/json'
-              },
-              body: JSON.stringify({ orderID: data.orderID })
-            })
-              .then((res) => { console.log(res); return res.json() })
-              .then((details) => {
-                if(details === 200){
-                  Swal.fire(
-                    'Success!',
-                    'Transaction Approved.',
-                    'success'
-                 )
-                } else {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                    footer: 'Please refresh and try again.'
-                 })
-                }
-              })
           }
-      }).render('#paypal-button-container');
-   }
-
-   render() {
-
-      return (
-         <div id="paypal-button-container"></div>
-      );
-   }
+        })
+        .catch(error => {
+          console.log(error)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: 'Please refresh and try again.'
+          })
+        })
+    }}
+    options={{
+      clientId: process.env.PAYPAL_CLIENT_ID
+    }}
+  />
+  </div>
+  );
 }
 
-
 export default PaypalButton;
-
-
-// FOR SERVER SIDE INTEGRATION
-// return fetch('/paypal-transaction-complete', {
-//   method: 'POST',
-//   headers: {
-//     'content-type': 'application/json'
-//   },
-//   body: JSON.stringify({
-//     orderID: data.orderID
-//   })
-// });

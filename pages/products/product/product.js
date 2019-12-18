@@ -14,7 +14,8 @@ class Product extends React.Component {
     super(props);
     this.state = {
       activeIndex: 0,
-      data: {}
+      data: {},
+      quantity: 1
     };
   }
 
@@ -67,9 +68,13 @@ class Product extends React.Component {
     )
   }
 
+  changeQuantity = (e) => {
+    this.setState({quantity: +e.target.value})
+  }
+
   render() {
     const { config, query } = this.props;
-    const { activeIndex, data } = this.state;
+    const { activeIndex, data, quantity } = this.state;
     let dataExists = false
     try {
       dataExists = !(Object.keys(data).length === 0 && data.constructor === Object)
@@ -124,15 +129,22 @@ class Product extends React.Component {
               <FormControl
                 className="col-3"
                 name="quantity"
+                id='quantifier'
                 type="number"
                 defaultValue={1}
                 min={1}
+                onChange={this.changeQuantity}
               />
               <Button variant="button" fullWidth={true}>Add To Cart</Button>
               <PaypalButton
+                cart={[{
+                  name: product.name,
+                  number: product.number,
+                  quantity: quantity,
+                }]}
                 commit={true}
                 currency={'USD'}
-                total={100}
+                total={product.price * quantity}
               />
             </FormGroup>
           </Form>

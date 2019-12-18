@@ -124,6 +124,7 @@ class Cart extends React.Component {
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto">
             {/* <Button variant="button" fullWidth={true}>Check Out</Button> */}
             <PaypalButton
+              cart={cart}
               commit={true}
               currency={'USD'}
               total={discountedTotal}
