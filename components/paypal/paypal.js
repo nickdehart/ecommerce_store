@@ -3,7 +3,6 @@ import { PayPalButton } from "react-paypal-button-v2";
 
 const PaypalButton = ({total, cart}) => {
   return (
-    <div>
     <PayPalButton
     createOrder={(data, actions) => {
       return fetch('/api/paypal/create-transaction', {
@@ -61,7 +60,6 @@ const PaypalButton = ({total, cart}) => {
       clientId: process.env.PAYPAL_CLIENT_ID
     }}
   />
-  </div>
   );
 }
 
