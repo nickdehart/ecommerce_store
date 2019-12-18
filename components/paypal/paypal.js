@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 
 const CLIENT = {
   sandbox: 'xxxXXX',
@@ -40,8 +41,20 @@ class PaypalButton extends React.Component {
             })
               .then((res) => { console.log(res); return res.json() })
               .then((details) => {
-                console.log(details)
-                alert('Transaction approved by ' + details.payer_given_name)
+                if(details === 200){
+                  Swal.fire(
+                    'Success!',
+                    'Transaction Approved.',
+                    'success'
+                 )
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please refresh and try again.'
+                 })
+                }
               })
           }
       }).render('#paypal-button-container');

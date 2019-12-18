@@ -1,7 +1,9 @@
-import { FormControl, InputGroup, Alert } from 'react-bootstrap'
+import { FormControl, InputGroup } from 'react-bootstrap'
+import Swal from 'sweetalert2'
+
 import Button from '../components/button'
 
-const handleSubmit = (e, setShow) => {
+const handleSubmit = (e) => {
   e.preventDefault();
   fetch('/api/subscribe', {
      method: 'POST',
@@ -16,15 +18,23 @@ const handleSubmit = (e, setShow) => {
      })
      .then(response => {
         if(response.status === 200)
-           setShow(1)
+          Swal.fire(
+            'Success!',
+            'Thank you for subscribing.',
+            'success'
+          )
         else
-           setShow(-1)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: 'Please refresh and try again.'
+          })
      })
      .catch(error => console.log(error))
 }
 
 const Home = ({config}) => {
-  const [show, setShow] = React.useState(0);
 
   return (
     <>
@@ -43,13 +53,7 @@ const Home = ({config}) => {
                 Subscribe to our newsletter
               </p>
               <p style={{textAlign: 'center'}}>Sign up to our newsletter for promotions and savings!</p>
-              <Alert show={show === 1} variant="success">
-               Success! Thank you for subscribing!
-              </Alert>
-              <Alert show={show === -1} variant="danger">
-                Failure! Something went wrong. Please refresh and try again.
-              </Alert>
-              <form onSubmit={(e) => handleSubmit(e, setShow)} className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-6 mx-auto">
+              <form onSubmit={handleSubmit} className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-6 mx-auto">
                 <InputGroup className="mb-3">
                   <FormControl
                     placeholder="Email Address"

@@ -1,10 +1,9 @@
-import { Alert } from 'react-bootstrap'
+import Swal from 'sweetalert2'
 
 const Review = ({config, data, dataExists, product}) => {
    const [page, setPage] = React.useState(0);
    const [items, setItems] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
    const [write, setWrite] = React.useState(false);
-   const [alert, setAlert] = React.useState(0);
    
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -41,9 +40,18 @@ const Review = ({config, data, dataExists, product}) => {
                .then(response => {
                   setWrite(false)
                   if(response.status === 200)
-                     setAlert(1)
+                     Swal.fire(
+                        'Success!',
+                        'Thank you for writing a review.',
+                        'success'
+                     )
                   else
-                     setAlert(-1)
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Please refresh and try again.'
+                     })
                })
                .catch(error => console.log(error))
          })
@@ -125,12 +133,6 @@ const Review = ({config, data, dataExists, product}) => {
                Write a Review
             </button>
          </div>
-         <Alert show={alert === 1} variant="success">
-            Success! Thank you for writing a review.
-         </Alert>
-         <Alert show={alert === -1} variant="danger">
-            Failure! Something went wrong. Please refresh and try again.
-         </Alert>
          {write &&
             <form onSubmit={handleSubmit}>
                <div className="row">

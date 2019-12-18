@@ -94,6 +94,7 @@ const MobileTable = (props) => {
    @media (max-width: 767px){
       .cart-img {
          max-width: 90px;
+         max-height: 90px;
       }
       .edit-btn {
          text-transform: uppercase;

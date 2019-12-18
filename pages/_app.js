@@ -41,7 +41,8 @@ export default class MyApp extends App {
          <Head>
             <title>{config.title}</title>
             <link rel="icon" href="/favicon.ico" />
-            <style>{`@import url(https://use.fontawesome.com/releases/v5.6.3/css/all.css)`}</style>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"></link>
+            {/* <style>{`@import url(https://use.fontawesome.com/releases/v5.6.3/css/all.css)`}</style> */}
          </Head>
          {config.promotion && <Promotion config={config} />}
          <Nav config={config} cartCount={cartCount}/>

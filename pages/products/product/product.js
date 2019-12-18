@@ -1,10 +1,15 @@
 import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
+import Swal from 'sweetalert2'
 
 import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
 import Review from '../../../components/review';
 
 class Product extends React.Component {
+  static getInitialProps({query}){
+    return {query}
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +44,11 @@ class Product extends React.Component {
         cart[i].quantity += product.quantity
         setCartCount(cart[i].quantity)
         sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+        Swal.fire(
+          'Success!',
+          'Added to Cart',
+          'success'
+        )
         return
       }
     }
@@ -50,10 +60,11 @@ class Product extends React.Component {
       quantity: product.quantity
     })
     sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
-  }
-
-  static getInitialProps({query}){
-    return {query}
+    Swal.fire(
+      'Success!',
+      'Added to Cart',
+      'success'
+    )
   }
 
   render() {

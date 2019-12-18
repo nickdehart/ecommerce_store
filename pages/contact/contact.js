@@ -1,4 +1,4 @@
-import { Alert } from 'react-bootstrap'
+import Swal from 'sweetalert2'
 import Button from '../../components/button'
 
 const handleSubmit = (e, setShow) => {
@@ -18,16 +18,26 @@ const handleSubmit = (e, setShow) => {
          })
       })
       .then(response => {
+         setShow(true)
          if(response.status === 200)
-            setShow(1)
+            Swal.fire(
+               'Success!',
+               'Thank you for reaching out. We will follow up with you as quickly as we can.',
+               'success'
+            )
          else
-            setShow(-1)
+            Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Something went wrong!',
+               footer: 'Please refresh and try again.'
+            })
       })
       .catch(error => console.log(error))
 }
 
 const Contact = ({config}) => {
-   const [show, setShow] = React.useState(0);
+   const [show, setShow] = React.useState(false);
 
    return (
    <>
@@ -56,13 +66,7 @@ const Contact = ({config}) => {
                <label htmlFor="textInput">Message<span>*</span></label>
                <textarea className="form-control" name="message" id="textInput" rows="10" required></textarea>
             </div>
-            <Alert show={show === 1} variant="success">
-               Success! Thank you for reaching out. We will follow up with you as quickly as we can.
-            </Alert>
-            <Alert show={show === -1} variant="danger">
-               Failure! Something went wrong. Please refresh and try again.
-            </Alert>
-            <Button variant="button" disabled={show === 1}>Send</Button>
+            <Button variant="button" disabled={show}>Send</Button>
          </form>
       </div>
 

@@ -24,10 +24,10 @@ const config = {
    },
    footer: {
       links: [
-         { href: '/contact', label: 'Contact' },
+         // { href: '/contact', label: 'Contact' },
          { href: '/legal/returns', label: 'Returns' },
-         { href: '/legal/privacy', label: 'Privacy Policy' },
-         { href: '/legal/terms', label: 'Terms of Service' },
+         { href: '/legal/privacy', label: 'Privacy' },
+         { href: '/legal/terms', label: 'Terms' },
       ]
    },
    products: products,
