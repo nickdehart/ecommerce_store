@@ -1,5 +1,7 @@
 import App from 'next/app'
 import Head from 'next/head'
+import Router from "next/router";
+import withGA from "next-ga";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Nav from '../components/nav';
@@ -8,7 +10,7 @@ import Promotion from '../components/promotion';
 
 import config from '../config';
 
-export default class MyApp extends App {
+class MyApp extends App {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,3 +54,5 @@ export default class MyApp extends App {
      )
    }
  }
+
+export default withGA("UA-xxxxxxxxx-1", Router)(MyApp);

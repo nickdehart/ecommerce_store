@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
 import Review from '../../../components/review';
+import Pixel from '../../../components/pixel';
 
 class Product extends React.Component {
   static getInitialProps({query}){
@@ -102,6 +103,7 @@ class Product extends React.Component {
 
   return (
     <>
+      <Pixel name={product.name ? product.name : 'FACEBOOK_PIXEL_1'} />
       <div className="container product">
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-3" >
           <img className="selected-img" src={`${product.assets}${product.images[activeIndex]}`}></img>
