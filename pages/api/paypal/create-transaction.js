@@ -14,6 +14,7 @@ const payPalClient = require('./payPalClient');
 module.exports = async function handleRequest(req, res) {
 
   // 3. Call PayPal to set up a transaction
+  let discountedTotal = 0
   let total = 0
   let items = []
   for(var i = 0; i < req.body.cart.length; i++){
@@ -26,21 +27,22 @@ module.exports = async function handleRequest(req, res) {
     }
 
     let price = product.price;
+    total += price * req.body.cart[i].quantity;
     switch(req.body.cart[i].quantity){
       case 1:
-          total += price;
+          discountedTotal += price;
           break;
       case 2:
           price = parseFloat((price - (price * .1)).toFixed(2))
-          total += price * 2;
+          discountedTotal += price * 2;
           break;
       case 3:
           price = parseFloat((price - (price * .15)).toFixed(2))
-          total += price * 3;
+          discountedTotal += price * 3;
           break;
       default:
           price = parseFloat((price - (price * .2)).toFixed(2))
-          total += price * req.body.cart[i].quantity;
+          discountedTotal += price * req.body.cart[i].quantity;
           break;
     }
 
@@ -50,7 +52,7 @@ module.exports = async function handleRequest(req, res) {
       sku: '' + req.body.cart[i].number,
       unit_amount: {
         currency_code: 'USD',
-        value: '' + price,
+        value: '' + product.price,
       },
       // tax: {
       //   currency_code: 'USD',
@@ -61,6 +63,9 @@ module.exports = async function handleRequest(req, res) {
     })
   }
 
+  console.log(discountedTotal)
+  console.log(total)
+  console.log(total - discountedTotal)
   const request = new paypal.orders.OrdersCreateRequest();
   request.prefer("return=representation");
   request.requestBody({
@@ -68,7 +73,7 @@ module.exports = async function handleRequest(req, res) {
     purchase_units: [{
       amount: {
         currency_code: 'USD',
-        value: '' + total,
+        value: '' + discountedTotal,
         breakdown: {
           item_total: {
             currency_code: 'USD',
@@ -94,10 +99,10 @@ module.exports = async function handleRequest(req, res) {
           //   currency_code: 'USD',
           //   value: '0.00',
           // },
-          // discount: {
-          //   currency_code: 'USD',
-          //   value: '0.00',
-          // }
+          discount: {
+            currency_code: 'USD',
+            value: '' + (total - discountedTotal),
+          }
         }
       },
       items: items,
