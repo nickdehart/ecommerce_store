@@ -6,7 +6,9 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cart: []
+      cart: [],
+      total: 0,
+      discountedTotal: 0
     };
   }
 
@@ -15,6 +17,7 @@ class Cart extends React.Component {
     if(cartCount > 0){
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
       this.setState({cart: cart ? cart : []})
+      this.calculateTotals(cart)
     }
   }
 
@@ -22,6 +25,7 @@ class Cart extends React.Component {
     if (this.props.cartCount !== prevProps.cartCount) {
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
       this.setState({cart: cart ? cart : []})
+      this.calculateTotals(cart)
     }
   }
 
@@ -64,10 +68,39 @@ class Cart extends React.Component {
       }
     }
   }
+
+  calculateTotals = (cart) => {
+    const { config } = this.props;
+    
+    let discountedTotal = 0;
+    let total = 0;
+    for(var i = 0; i < cart.length; i++){
+        let price = config.products[cart[i].number].price * cart[i].quantity;
+        total += price;
+        switch(cart[i].quantity){
+          case 1:
+              discountedTotal += price;
+              break;
+          case 2:
+              discountedTotal += parseFloat((price - (price * .1)).toFixed(2));
+              cart[i].discount = .1;
+              break;
+          case 3:
+              discountedTotal += parseFloat((price - (price * .15)).toFixed(2));
+              cart[i].discount = .15;
+              break;
+          default:
+              discountedTotal += parseFloat((price - (price * .2)).toFixed(2));
+              cart[i].discount = .2;
+              break;
+        }
+    }
+    this.setState({total: total, discountedTotal: discountedTotal})
+  }
   
   render() {
     const { config } = this.props;
-    const { cart } = this.state;
+    const { cart, total, discountedTotal } = this.state;
 
     return (
     <>
@@ -85,13 +118,15 @@ class Cart extends React.Component {
             config={config} 
             remove={this.removeCartItem}
             update={this.updateCartQuantity}
+            total={total}
+            discountedTotal={discountedTotal}
           />
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto">
             {/* <Button variant="button" fullWidth={true}>Check Out</Button> */}
             <PaypalButton
               commit={true}
               currency={'USD'}
-              total={100}
+              total={discountedTotal}
             />
           </div>
         </div>
