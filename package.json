@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test" : "echo \"No test specified\" && exit 0",
     "dev": "SET NODE_ENV=sandbox && node ./server",
     "build": "next build",
     "start": "SET NODE_ENV=production && node ./server",
