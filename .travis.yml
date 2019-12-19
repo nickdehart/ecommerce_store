@@ -21,7 +21,7 @@ deploy:
     secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     region: "us-east-2"       
     app: "ecommerce_store"                     
-    env: "ecommerce-store-production"                     
+    env: "ecommerce-store-prod"                     
     bucket_name: ${AWS_S3_BUCKET}
     on:
       branch: "master"
