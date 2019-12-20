@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nickdehart/ecommerce_store.svg?branch=master)](https://travis-ci.org/nickdehart/ecommerce_store)
+
 ### E-Commerce Store
 ##### A configurable, mobile first, store application that can easily be changed to sell a variety of products.
 
