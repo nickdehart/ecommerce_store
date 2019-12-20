@@ -1,6 +1,7 @@
 language: node_js
 node_js:
  - "10.15.1"
+os: windows
 env:
   - PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
     PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET}
