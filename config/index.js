@@ -5,6 +5,13 @@ const config = {
    theme: {
       color: '#ee6e73',
    },
+   mongo: {
+      DB_NAME: 'ecommerce',
+      DB_CONTACT: 'messages',
+      DB_SUBSCRIBE: 'subscribe',
+      DB_REVIEW: 'reviews',
+      DB_ORDERS: 'orders'
+   },
    home: {
       banner: '/banner.jpg',
       promo: 'Up to 60% off',
