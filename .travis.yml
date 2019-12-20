@@ -1,6 +1,16 @@
 language: node_js
 node_js:
  - "10.15.1"
+env:
+  - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
+  - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET}
+  - DB_HOST=${DB_HOST}
+  - DB_NAME=${DB_NAME}
+  - DB_CONTACT=${DB_CONTACT}
+  - DB_SUBSCRIBE=${DB_SUBSCRIBE}
+  - DB_REVIEW=${DB_REVIEW}
+  - DB_ORDERS=${DB_ORDERS}
+
 branches:
   only:
   # - staging
