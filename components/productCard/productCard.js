@@ -1,33 +1,36 @@
 import React from 'react'
 import {Link} from '../../server/routes'
 
-const ProductCard = ({item, config}) => {
+const ProductCard = ({item, config, meta}) => {
    let stars = [];
-   let numReviews = 112;
    for(var i = 0; i < 5; i++) {
-      stars.push(<i className="fas fa-star" 
-                  style={{color: config.theme.color}}
-                  key={`star-${i}`}></i>)
+      if(i < Math.round(meta.avg)){
+         stars.push(<i className="fas fa-star" 
+                     style={{color: config.theme.color}}
+                     key={`star-${i}`}></i>)
+      } else {
+         stars.push(<i className="far fa-star" 
+                     style={{color: config.theme.color}}
+                     key={`star-${i}`}></i>)
+      }
    }
 
    return (
-   <Link route={`/products/${item.name.toLowerCase().replace(/[^A-Z0-9]/gi, '_')}`}>
+   <Link route={`/products/${item.id}`}>
       <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 item m-2">
          <img src={`${item.assets}${item.images[0]}`} className="card-img-top" alt={item.name} />
          <div className="card-body">
             <div>
                <h5 className="card-title">{item.name}</h5>
-               <div className="mb-2">{stars}&nbsp;({numReviews})</div>
+               <div className="mb-2 review-container">
+                  {stars}&nbsp;{meta.count ? `(${meta.count})` : 'No Reviews'}
+               </div>
             </div>
             <p className="card-text">{item.description}</p>
             <p className="price">{item.multiplier && <s>{`$${Math.floor(item.price * item.multiplier)}.99`}</s>}${item.price}</p>
          </div>
 
       <style jsx>{`
-         .cart-icn {
-            font-size: xx-large; 
-            color: ${config.theme.color};
-         }
          .card-img-top {
          display: block;
          position: relative;
@@ -45,6 +48,9 @@ const ProductCard = ({item, config}) => {
          .item:hover {
             box-shadow: 0 2px 2px 0 ${config.theme.color}, 0 3px 1px -2px ${config.theme.color}, 0 1px 5px 0 ${config.theme.color};
             cursor: pointer;
+         }
+         .review-container {
+            text-align: left;
          }
          s {
             color: #333;

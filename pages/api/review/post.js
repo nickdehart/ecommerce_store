@@ -28,28 +28,16 @@ const post = (req, res) => {
          }
 
          let record = {
+            username: username,
+            country: 'N/A',
+            rating: +req.body.rating,
+            text: req.body.text,
+            date: req.body.date,
+            images: [],
+            useful: 0,
+            useless: 0,
+            id: req.body.id,
             name: req.body.name,
-            count: 1,
-            avg: +req.body.rating,
-            stars: {
-               '5': +req.body.rating === 5 ? '100%' : '0%', 
-               '4': +req.body.rating === 4 ? '100%' : '0%', 
-               '3': +req.body.rating === 3 ? '100%' : '0%', 
-               '2': +req.body.rating === 2 ? '100%' : '0%', 
-               '1': +req.body.rating === 1 ? '100%' : '0%', 
-            },
-            reviews: [
-               {
-                  username: username,
-                  country: 'N/A',
-                  rating: +req.body.rating,
-                  text: req.body.review,
-                  date: req.body.date,
-                  useful: 0,
-                  useless: 0,
-                  images: [],
-               }
-            ]
          }
          collection.insertOne(record)
          client.close()

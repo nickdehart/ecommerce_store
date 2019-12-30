@@ -1,71 +1,58 @@
 import Swal from 'sweetalert2'
 
-const Review = ({config, data, dataExists, product}) => {
+const Review = ({config, data, product}) => {
    const [page, setPage] = React.useState(0);
    const [items, setItems] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
    const [write, setWrite] = React.useState(false);
+
+   let dataObj = {}
+   for(var i = 0; i < data.length; i++){
+      dataObj[data[i]._id] = data[i]
+   }
    
    const handleSubmit = (e) => {
       e.preventDefault();
-      let body = {
-         username: e.target.username.value,
-         rating: e.target.rating.value,
-         review: e.target.review.value,
-         date: new Date(),
-         name: product.toLowerCase(),
-         stars: dataExists ? data.stars : [],
-         avg: dataExists ? data.avg : 0,
-         count: dataExists ? data.reviews.length : 0
-      }
-      fetch(`/api/review?name=${product.toLowerCase()}`)
-         .then(response => response.json())
-         .then(data => {
-            fetch('/api/review', {
-               method: `${Object.keys(data).length > 0 ? 'PUT' : 'POST'}`,
-               headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-               }, 
-               body: JSON.stringify({
-                     username: body.username,
-                     rating: body.rating,
-                     review: body.review,
-                     date: body.date,
-                     name: body.name,
-                     stars: body.stars,
-                     avg: body.avg,
-                     count: body.count
-                  })
-               })
-               .then(response => {
-                  setWrite(false)
-                  if(response.status === 200)
-                     Swal.fire(
-                        'Success!',
-                        'Thank you for writing a review.',
-                        'success'
-                     )
-                  else
-                     Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                        footer: 'Please refresh and try again.'
-                     })
-               })
-               .catch(error => console.log(error))
+      fetch('/api/review', {
+         method: 'POST',
+         headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+         }, 
+         body: JSON.stringify({
+               username: e.target.username.value,
+               rating: e.target.rating.value,
+               text: e.target.review.value,
+               date: new Date(),
+               id: product.id,
+               name: product.name.toLowerCase(),
+            })
          })
-         .catch(error => console.log(error))
-      
+         .then(response => {
+            setWrite(false)
+            if(response.status === 200)
+               Swal.fire(
+                  'Success!',
+                  'Thank you for writing a review.',
+                  'success'
+               )
+            else
+               Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                  footer: 'Please refresh and try again.'
+               })
+         })
+         .catch(error => console.error(error))
    }
 
    const incrementPage = (page) => {
       let newPage = page + 1;
-      if((page + 1) < (data.reviews.length / 10)) {
+      if((page + 1) < (dataObj[0].reviews.length / 10)) {
          setPage(newPage)
          let newItems = []
          for(var i = newPage * 10; i < newPage * 10 + 10; i++){
-            if(i < data.reviews.length){
+            if(i < dataObj[0].reviews.length){
                newItems.push(i)
             }
          }
@@ -104,27 +91,27 @@ const Review = ({config, data, dataExists, product}) => {
       <div className="container">
          <div className="review-actions">
             <div className="stars">
-               {dataExists &&
+               {data.length > 0 &&
                <>
                   <div>
                      {getStars(5)}
-                     &nbsp;&nbsp;{data.stars['5']}
+                     &nbsp;&nbsp;{dataObj[5] ? dataObj[5].count : 0}
                   </div>
                   <div>
                      {getStars(4)}
-                     &nbsp;&nbsp;{data.stars['4']}
+                     &nbsp;&nbsp;{dataObj[4] ? dataObj[4].count : 0}
                   </div>
                   <div>
                      {getStars(3)}
-                     &nbsp;&nbsp;{data.stars['3']}
+                     &nbsp;&nbsp;{dataObj[3] ? dataObj[3].count : 0}
                   </div>
                   <div>
                      {getStars(2)}
-                     &nbsp;&nbsp;{data.stars['2']}
+                     &nbsp;&nbsp;{dataObj[2] ? dataObj[2].count : 0}
                   </div>
                   <div>
                      {getStars(1)}
-                     &nbsp;&nbsp;{data.stars['1']}
+                     &nbsp;&nbsp;{dataObj[1] ? dataObj[1].count : 0}
                   </div>
                </>
                }
@@ -133,58 +120,56 @@ const Review = ({config, data, dataExists, product}) => {
                Write a Review
             </button>
          </div>
-         {write &&
-            <form onSubmit={handleSubmit}>
-               <div className="row">
-                  <div className="form-group col-12 col-md-6">
-                     <label htmlFor="nameInput">Name<span style={{color: 'red'}}>*</span></label>
-                     <input type="text" name="username" className="form-control" id="nameInput" placeholder="John" required/>
-                  </div>
-                  <div className="form-group col-12 col-md-6">
-                     <label htmlFor="ratingSelect">Rating<span style={{color: 'red'}}>*</span></label>
-                     <select className="form-control" name="rating" id="ratingSelect" required>
-                        <option value={5}>5 Stars - Love it!</option>
-                        <option value={4}>4 Stars - Like it</option>
-                        <option value={3}>3 Stars - It's okay</option>
-                        <option value={2}>2 Stars - Didn't like it</option>
-                        <option value={1}>1 Stars - Hate it</option>
-                     </select>
-                  </div>
+         <form onSubmit={handleSubmit} style={{display: write ? 'block' : 'none'}}>
+            <div className="row">
+               <div className="form-group col-12 col-md-6">
+                  <label htmlFor="nameInput">Name<span style={{color: 'red'}}>*</span></label>
+                  <input type="text" name="username" className="form-control" id="nameInput" placeholder="John" required/>
                </div>
-               <div className="form-group">
-                  <label htmlFor="textInput">Review<span style={{color: 'red'}}>*</span></label>
-                  <textarea className="form-control" name="review" id="textInput" rows="4" required></textarea>
+               <div className="form-group col-12 col-md-6">
+                  <label htmlFor="ratingSelect">Rating<span style={{color: 'red'}}>*</span></label>
+                  <select className="form-control" name="rating" id="ratingSelect" required>
+                     <option value={5}>5 Stars - Love it!</option>
+                     <option value={4}>4 Stars - Like it</option>
+                     <option value={3}>3 Stars - It's okay</option>
+                     <option value={2}>2 Stars - Didn't like it</option>
+                     <option value={1}>1 Stars - Hate it</option>
+                  </select>
                </div>
-               <button type="submit">
-                  Submit Review
-               </button>
-            </form>
-         }
-         {dataExists ?
+            </div>
+            <div className="form-group">
+               <label htmlFor="textInput">Review<span style={{color: 'red'}}>*</span></label>
+               <textarea className="form-control" name="review" id="textInput" rows="4" required></textarea>
+            </div>
+            <button type="submit">
+               Submit Review
+            </button>
+         </form>
+         {data.length > 0 ?
          <>
          <table className="table">
             <tbody>
                {items.map((item, index) => {
-                  if(data.reviews[item])
+                  if(dataObj[0].reviews[item])
                   {
                      return (
                      <tr key={`review-row-${index}`}>
                         <td style={{width: '130px'}}>
                            <div className="user-container">
                               <i className="fas fa-user"></i>
-                              <p>{data.reviews[item].username}</p>
+                              <p>{dataObj[0].reviews[item].username}</p>
                            </div>
-                           <p className="date">{new Date(data.reviews[item].date).toLocaleDateString()}</p>
+                           <p className="date">{new Date(dataObj[0].reviews[item].date).toLocaleDateString()}</p>
                            <div className="star-container">
-                              <small>{data.reviews[item].rating}</small>
-                              {getStars(data.reviews[item].rating)}
+                              <small>{dataObj[0].reviews[item].rating}</small>
+                              {getStars(dataObj[0].reviews[item].rating)}
                            </div>
                         </td>
                         <td>
-                           <p>{data.reviews[item].text}</p>
+                           <p>{dataObj[0].reviews[item].text}</p>
                         </td>
                         <td className="images">
-                           {data.reviews[item].images.map((url, index) => {
+                           {dataObj[0].reviews[item].images.map((url, index) => {
                               return (
                               <a href={url} target="_blank" key={`review-img-${index}`}>
                                  <img src={url} className="img-max" />
