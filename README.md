@@ -4,6 +4,9 @@
 ##### A configurable, mobile first, store application that can easily be changed to sell a variety of products.
 
 - Developed with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app)
+- Currently deployed on Now at [`https://ecommercestore.now.sh/`]( https://ecommercestore.now.sh/)
+   - Now is a free serverless production environment
+   - Unfortunately that means none of the API's will work while it is deployed on Now. 
 
 #### Mobile View:
 ![alt text](./mobile.gif)

@@ -1,40 +1,42 @@
 import { FormControl, InputGroup } from 'react-bootstrap'
 import Swal from 'sweetalert2'
-
 import Button from '../components/button'
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  fetch('/api/subscribe', {
-     method: 'POST',
-     headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json'
-     }, 
-     body: JSON.stringify({
-          email: e.target.email.value,
-          date: new Date()
-        })
-     })
-     .then(response => {
-        if(response.status === 200)
-          Swal.fire(
-            'Success!',
-            'Thank you for subscribing.',
-            'success'
-          )
-        else
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: 'Please refresh and try again.'
-          })
-     })
-     .catch(error => console.log(error))
-}
-
 const Home = ({config}) => {
+
+  const [disable, setDisable] = React.useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch('/api/subscribe', {
+       method: 'POST',
+       headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+       }, 
+       body: JSON.stringify({
+            email: e.target.email.value,
+            date: new Date()
+          })
+       })
+       .then(response => {
+          if(response.status === 200){
+            Swal.fire(
+              'Success!',
+              'Thank you for subscribing.',
+              'success'
+            )
+            setDisable(true)
+          } else
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: 'Please refresh and try again.'
+            })
+       })
+       .catch(error => console.error(error))
+  }
 
   return (
     <>
@@ -59,9 +61,10 @@ const Home = ({config}) => {
                     placeholder="Email Address"
                     name="email"
                     type="email"
+                    required
                   />
                   <InputGroup.Append>
-                    <button className="sub-button" type="submit">Subscribe</button>
+                    <button className="sub-button" type="submit" disabled={disable}>Subscribe</button>
                   </InputGroup.Append>
                 </InputGroup>
               </form>
@@ -116,6 +119,9 @@ const Home = ({config}) => {
           font-weight: 600;
           text-transform: uppercase;
           border: 0px;
+        }
+        .sub-button:disabled {
+          background: #dddddd
         }
       `}</style>
     </>

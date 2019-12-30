@@ -1,4 +1,4 @@
-import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
+import { FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 
 import PaypalButton from '../../../components/paypal';
@@ -15,20 +15,29 @@ class Product extends React.Component {
     super(props);
     this.state = {
       activeIndex: 0,
-      data: {},
+      reviews: [],
+      meta: [],
       quantity: 1
     };
   }
 
   componentDidMount() {
     const { query } = this.props;
-
-    fetch(`/api/review?name=${query.id}`)
+    fetch(`/api/review?id=${query.id}`)
       .then(response => response.json())
       .then(data => {
-        this.setState({data: data[0]})
+        this.setState({reviews: data})
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
+    fetch(`/api/review/meta`)
+      .then(response => response.json())
+      .then(data => {
+        for(var i = 0; i < data.length; i++){
+          if(data[i]._id === query.id)
+            this.setState({meta: [data[i]]})
+        }
+      })
+      .catch(error => console.error(error))
   }
 
   addToCart = (e, product) => {
@@ -42,7 +51,7 @@ class Product extends React.Component {
     }
 
     for(var i = 0; i < cart.length; i++){
-      if(product.name === cart[i].name){
+      if(product.id === cart[i].id){
         cart[i].quantity += product.quantity
         setCartCount(cart[i].quantity)
         sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
@@ -57,7 +66,7 @@ class Product extends React.Component {
 
     setCartCount(cartCount + product.quantity)
     cart.push({
-      name: product.name,
+      id: product.id,
       number: product.number,
       quantity: product.quantity
     })
@@ -75,17 +84,11 @@ class Product extends React.Component {
 
   render() {
     const { config, query } = this.props;
-    const { activeIndex, data, quantity } = this.state;
-    let dataExists = false
-    try {
-      dataExists = !(Object.keys(data).length === 0 && data.constructor === Object)
-    } catch(e) {
-
-    }
+    const { activeIndex, reviews, meta, quantity } = this.state;
 
     let product;
     for(var i = 0; i < config.products.length; i++){
-      if(config.products[i].name.toLowerCase().replace(/[^A-Z0-9]/gi, '_') === query.id){
+      if(config.products[i].id === query.id){
         product = config.products[i];
         product.number = i;
         break;
@@ -93,8 +96,8 @@ class Product extends React.Component {
     }
 
     let stars = [];
-    if(dataExists) {
-      for(var i = 0; i < data.avg; i++) {
+    if(meta.length > 0) {
+      for(var i = 0; i < Math.round(meta[0].avg); i++) {
       stars.push(<i className="fas fa-star" 
                     style={{color: config.theme.color}}
                     key={`star-${i}`}></i>)
@@ -122,10 +125,10 @@ class Product extends React.Component {
         </div>
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-3">
           <h1>{product.name}</h1>
-          {dataExists && <div>{stars}&nbsp;{data.reviews && `(${data.reviews.length})`}</div>}
+          {meta.length > 0 && <div>{stars}&nbsp;{`(${meta[0].count})`}</div>}
           <p className="price mt-2">{product.multiplier && <s>{`$${Math.floor(product.price * product.multiplier)}.99`}</s>}${product.price}</p>
           <p>{product.description}</p>
-          <Form onSubmit={(e) => this.addToCart(e, product)} role="form">
+          <form onSubmit={(e) => this.addToCart(e, product)}>
             <FormGroup className="mb-3">
               <FormLabel>Quantity:</FormLabel>
               <FormControl
@@ -149,7 +152,7 @@ class Product extends React.Component {
                 total={product.price * quantity}
               />
             </FormGroup>
-          </Form>
+          </form>
           <div className="table-responsive">
             <h4><b>Buy More, Pay Less!</b></h4>
             <table className="table">
@@ -177,7 +180,7 @@ class Product extends React.Component {
           </div>
         </div>
       </div>
-      <Review config={config} data={data} dataExists={dataExists} product={product.name}/>
+      <Review config={config} data={reviews} dataExists={false} product={product}/>
 
       <style jsx>{`
         s {

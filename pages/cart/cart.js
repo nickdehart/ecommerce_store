@@ -39,7 +39,7 @@ class Cart extends React.Component {
       cart = []
     }
     cart = cart.filter((product) => {
-      return product.name !== item.name;
+      return product.id !== item.id;
     })
     sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
   }
@@ -56,7 +56,7 @@ class Cart extends React.Component {
         cart = []
       }
       for(var i = 0; i < cart.length; i++){
-        if(cart[i].name === item.name){
+        if(cart[i].id === item.id){
           let oldCartCount = cartCount - cart[i].quantity
           let newCartCount = oldCartCount + newQuantity;
           setCartCount(newCartCount)

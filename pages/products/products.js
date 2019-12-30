@@ -2,19 +2,37 @@ import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 
 import ProductCard from '../../components/productCard'
 
-const Products = ({config}) => {
-  const [phrase, setPhrase] = React.useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setPhrase(event.target.search.value)
+class Products extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      phrase: '',
+      reviewMeta: []
+    };
   }
 
-  return (
-    <>
-      <div className="hero">
+  componentDidMount() {
+    fetch(`/api/review/meta`)
+      .then(response => response.json())
+      .then(reviewMeta => {
+        this.setState({reviewMeta: reviewMeta})
+      })
+      .catch(error => console.error(error))
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState({phrase: event.target.search.value})
+  }
+
+  render() {
+    const { config } = this.props;
+    const { phrase, reviewMeta } = this.state;
+
+    return (
+      <>
         <div className="container col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 my-4 mx-auto">
-          <Form onSubmit={handleSubmit} role="form">
+          <form onSubmit={this.handleSubmit}>
             <InputGroup className="mb-3">
               <FormControl
                 placeholder="Search..."
@@ -22,42 +40,37 @@ const Products = ({config}) => {
               />
               <InputGroup.Append>
                 <Button variant="outline-secondary" type="submit"><i className="fas fa-search"></i></Button>
+                {
+                  phrase !== '' &&
+                  <Button variant="outline-danger" onClick={() => this.setState({phrase: ''})}><i className="fas fa-times"></i></Button>
+                }
               </InputGroup.Append>
+              
             </InputGroup>
-          </Form>
+          </form>
         </div>
         <div className="container items">
         {config.products.filter(product => product.name.toUpperCase().includes(phrase.toUpperCase()))
-        .map((item, index) => {
-          return (<ProductCard key={`product-${index}`} item={item} config={config}/>)
-        })}
+          .map((item, index) => {
+            let meta = {avg: 0}
+            for(var i = 0; i < reviewMeta.length; i++)
+              if(reviewMeta[i]._id === item.id)
+                meta = reviewMeta[i]
+            return (<ProductCard key={`product-${index}`} item={item} config={config} meta={meta}/>)
+          })
+        }
         </div>
-      </div>
 
-      <style jsx>{`
-        .hero {
-          width: 100%;
-          color: #333;
-        }
-        .title {
-          margin: 0;
-          width: 100%;
-          padding: 40px 0 20px;
-          line-height: 1.15;
-          font-size: 48px;
-        }
-        .title,
-        .description {
-          text-align: center;
-        }
-        .items {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
-        }
-      `}</style>
-    </>
-  )
+        <style jsx>{`
+          .items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+        `}</style>
+      </>
+    )
+  }
 }
 
 export default Products

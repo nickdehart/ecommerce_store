@@ -27,12 +27,12 @@ const MobileTable = (props) => {
                <React.Fragment key={`cart-item-${index}`}>
                <tr >
                   <td style={{display: 'flex'}}>
-                     <Link route={`/products/${item.name.toLowerCase().replace(/[^A-Z0-9]/gi, '_')}`}>
+                     <Link route={`/products/${item.id}`}>
                         <img src={`${config.products[item.number].assets}${config.products[item.number].images[0]}`} 
                            className="img-fluid cart-img mr-3"/>
                      </Link>
                      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-                        <p>{item.name}</p>
+                        <p>{config.products[item.number].name}</p>
                         <small>Quantity: {item.quantity}</small>
                         <div className="edit-btn" onClick={() => handleClick(index)}>
                            Edit

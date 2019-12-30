@@ -33,7 +33,7 @@ const handleSubmit = (e, setShow) => {
                footer: 'Please refresh and try again.'
             })
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
 }
 
 const Contact = ({config}) => {

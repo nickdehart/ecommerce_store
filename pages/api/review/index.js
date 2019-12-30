@@ -1,6 +1,5 @@
 import get from './get'
 import post from './post'
-import put from './put'
 
 // Reviews API
 // GET retrieves reviews
@@ -11,8 +10,6 @@ export default (req, res) => {
       get(req, res)
    } else if (req.method === 'POST') {
       post(req, res)
-   } else if (req.method === 'PUT') {
-      put(req, res)
    } else {
       res.status(404).send({message: 'Not Found'});
    }

@@ -18,7 +18,7 @@ const PaypalButton = ({total, cart}) => {
       })
       .then((response) => {return response.json()})
       .then((data) => {return data.orderID})
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
     }}
     onApprove={(data) => {
       // Capture the funds from the transaction
@@ -47,7 +47,7 @@ const PaypalButton = ({total, cart}) => {
           }
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
