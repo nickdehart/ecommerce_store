@@ -9,7 +9,7 @@ const Privacy = ({config}) => (
       <br /> When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the Site, and information about how you interact with the Site. We refer to this automatically-collected information as “Device Information”.
       <br />
       <br /> We collect Device Information using the following technologies:
-      <br /> - “Cookies” are data files that are placed on your device or computer and often include an anonymous unique identifier. For more information about cookies, and how to disable cookies, visit http://www.allaboutcookies.org.
+      <br /> - “Cookies” are data files that are placed on your device or computer and often include an anonymous unique identifier. For more information about cookies, and how to disable cookies, visit <a href='http://www.allaboutcookies.org' target='_blank'>http://www.allaboutcookies.org</a>.
       <br /> - “Log files” track actions occurring on the Site, and collect data including your IP address, browser type, Internet service provider, referring/exit pages, and date/time stamps.
       <br /> - “Web beacons”, “tags”, and “pixels” are electronic files used to record information about how you browse the Site.
       <br />
@@ -26,19 +26,19 @@ const Privacy = ({config}) => (
       <br /> We use the Device Information that we collect to help us screen for potential risk and fraud (in particular, your IP address), and more generally to improve and optimize our Site (for example, by generating analytics about how our customers browse and interact with the Site, and to assess the success of our marketing and advertising campaigns).
       <br />
       <br /> <strong>Sharing your personal Information</strong>
-      <br /> We share your Personal Information with third parties to help us use your Personal Information, as described above. We use Google Analytics to help us understand how our customers use the Site -- you can read more about how Google uses your Personal Information here: https://www.google.com/intl/en/policies/privacy/. You can also opt-out of Google Analytics here: https://tools.google.com/dlpage/gaoptout.
+      <br /> We share your Personal Information with third parties to help us use your Personal Information, as described above. We use Google Analytics to help us understand how our customers use the Site -- you can read more about how Google uses your Personal Information here: <a href='https://www.google.com/intl/en/policies/privacy/' target='_blank'>https://www.google.com/intl/en/policies/privacy/</a>. You can also opt-out of Google Analytics here: <a href='https://tools.google.com/dlpage/gaoptout' target='_blank'>https://tools.google.com/dlpage/gaoptout</a>.
       <br />
       <br /> Finally, we may also share your Personal Information to comply with applicable laws and regulations, to respond to a subpoena, search warrant or other lawful request for information we receive, or to otherwise protect our rights.
       <br />
       <br /> <strong>Behavioural advertising</strong>
-      <br /> As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (“NAI”) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work.
+      <br /> As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (“NAI”) educational page at <a href='http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work' target='_blank'>http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work</a>.
       <br />
       <br /> You can opt out of targeted advertising by using the links below:
-      <br /> - Facebook: https://www.facebook.com/settings/?tab=ads
-      <br /> - Google: https://www.google.com/settings/ads/anonymous
-      <br /> - Bing: https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads
+      <br /> - Facebook: <a href='https://www.facebook.com/settings/?tab=ads' target='_blank'>https://www.facebook.com/settings/?tab=ads</a>
+      <br /> - Google: <a href='https://www.google.com/settings/ads/anonymous' target='_blank'>https://www.google.com/settings/ads/anonymous</a>
+      <br /> - Bing: <a href='https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads' target='_blank'>https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads</a>
       <br />
-      <br /> Additionally, you can opt out of some of these services by visiting the Digital Advertising Alliance’s opt-out portal at: http://optout.aboutads.info/.
+      <br /> Additionally, you can opt out of some of these services by visiting the Digital Advertising Alliance’s opt-out portal at: <a href='http://optout.aboutads.info/' target='_blank'>http://optout.aboutads.info/</a>.
       <br />
       <br /> <strong>Do not track</strong>
       <br /> Please note that we do not alter our Site’s data collection and use practices when we see a Do Not Track signal from your browser.
