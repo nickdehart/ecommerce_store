@@ -42,7 +42,7 @@ module.exports = async function handleRequest(req, res) {
 }
 
 async function saveTransaction(capture) {
-   MongoClient.connect(process.env.DB_HOST, (err, client) => {
+   MongoClient.connect(`mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`, (err, client) => {
       if(err) {
          console.log(err)
          client.close()

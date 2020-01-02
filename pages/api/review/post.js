@@ -3,7 +3,7 @@ const sanitize = require('mongo-sanitize');
 
 // POST creates reviews if none exist for item
 const post = (req, res) => {
-   MongoClient.connect(process.env.DB_HOST, (err, client) => {
+   MongoClient.connect(`mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`, (err, client) => {
       if(err) {
          client.close()
          res.status(400).send({message: err});
