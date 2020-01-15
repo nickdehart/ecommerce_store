@@ -12,7 +12,7 @@ const Guarantees = () => {
             </span>
          </div>
          <div className="icon-box mx-3">
-            <small>100%&nbsp;Secure&nbsp;SSL</small>
+            <small>Secure&nbsp;Ordering</small>
             <span className="fa-stack fa-2x">
                <i className="fas fa-certificate fa-stack-2x"></i>
                <i className="fab fa-expeditedssl fa-stack-1x fa-inverse"></i>
