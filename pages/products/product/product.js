@@ -183,6 +183,15 @@ class Product extends React.Component {
           </div>
         </div>
       </div>
+      {product.demo && 
+        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mx-auto my-3">
+          <img 
+            src={`${product.assets}${product.demo}`} 
+            className="rounded mx-auto d-block"
+            style={{maxWidth: '100%'}}
+            />
+        </div>
+      }
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
       {product.details && product.details.map((detail, index) => 
         <Description config={config} detail={detail} key={`description-detail-${index}`}/>
