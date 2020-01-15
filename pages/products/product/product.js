@@ -97,8 +97,6 @@ class Product extends React.Component {
       }
     }
 
-    console.log(product)
-
     let stars = [];
     if(meta.length > 0) {
       for(var i = 0; i < Math.round(meta[0].avg); i++) {
