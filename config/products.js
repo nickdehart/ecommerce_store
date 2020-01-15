@@ -9,6 +9,13 @@ const products =
                            // Short description
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
                            // image filenames in assets folder
+      details: [
+         {icon: 'fas fa-bolt', title: 'Quick Connection', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-volume-up', title: 'High Quality Audio', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-wifi', title: 'Wireless Charging', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-battery-full', title: 'All-Day Battery', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-dollar-sign', title: 'Affordable', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+      ],
       images: [
          '/item1.jpg', 
          '/item2.jpg', 
@@ -24,6 +31,13 @@ const products =
       price: 79.99,
       multiplier: 1.5,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
+      details: [
+         {icon: 'fas fa-bolt', title: 'Quick Connection', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-volume-up', title: 'High Quality Audio', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-wifi', title: 'Wireless Charging', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-battery-full', title: 'All-Day Battery', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-dollar-sign', title: 'Affordable', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+      ],
       images: [
          '/item2.jpg', 
          '/item1.jpg', 
@@ -39,6 +53,13 @@ const products =
       price: 119.99,
       multiplier: 1.5,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.', 
+      details: [
+         {icon: 'fas fa-bolt', title: 'Quick Connection', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-volume-up', title: 'High Quality Audio', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-wifi', title: 'Wireless Charging', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-battery-full', title: 'All-Day Battery', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+         {icon: 'fas fa-dollar-sign', title: 'Affordable', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima.'},
+      ],
       images: [
          '/item3.jpg', 
          '/item1.jpg', 

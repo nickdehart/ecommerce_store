@@ -1,6 +1,7 @@
 import Button from '../../components/button'
 import PaypalButton from '../../components/paypal';
 import CartTable from '../../components/cartTable';
+import Guarantees from '../../components/guarantees/guarantees';
 
 class Cart extends React.Component {
   constructor(props) {
@@ -121,6 +122,7 @@ class Cart extends React.Component {
             total={total}
             discountedTotal={discountedTotal}
           />
+          <Guarantees />
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto">
             {/* <Button variant="button" fullWidth={true}>Check Out</Button> */}
             <PaypalButton

@@ -42,7 +42,10 @@ module.exports = async function handleRequest(req, res) {
 }
 
 async function saveAuthorization(authorization) {
-   MongoClient.connect(`mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`, (err, client) => {
+   let connectionString = `mongodb://${process.env.DB_HOST}`
+   if(process.env.DB_USER_NAME && process.env.DB_PASS)
+      connectionString = `mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`
+   MongoClient.connect(connectionString, (err, client) => {
       if(err) {
          console.log(err)
          client.close()

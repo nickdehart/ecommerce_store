@@ -4,7 +4,10 @@ const config = require('../../config');
 
 export default (req, res) => {
    if (req.method === 'POST') {
-      MongoClient.connect(`mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`, (err, client) => {
+      let connectionString = `mongodb://${process.env.DB_HOST}`
+      if(process.env.DB_USER_NAME && process.env.DB_PASS)
+         connectionString = `mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`
+      MongoClient.connect(connectionString, (err, client) => {
          if(err) {
             client.close()
             res.status(400).send({

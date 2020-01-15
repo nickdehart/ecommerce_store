@@ -5,6 +5,8 @@ import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
 import Review from '../../../components/review';
 import Pixel from '../../../components/pixel';
+import Guarantees from '../../../components/guarantees/guarantees';
+import Description from '../../../components/description/description';
 
 class Product extends React.Component {
   static getInitialProps({query}){
@@ -95,6 +97,8 @@ class Product extends React.Component {
       }
     }
 
+    console.log(product)
+
     let stars = [];
     if(meta.length > 0) {
       for(var i = 0; i < Math.round(meta[0].avg); i++) {
@@ -153,6 +157,7 @@ class Product extends React.Component {
               />
             </FormGroup>
           </form>
+          <Guarantees />
           <div className="table-responsive">
             <h4><b>Buy More, Pay Less!</b></h4>
             <table className="table">
@@ -179,6 +184,11 @@ class Product extends React.Component {
             </table>
           </div>
         </div>
+      </div>
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+      {product.details && product.details.map((detail, index) => 
+        <Description config={config} detail={detail} key={`description-detail-${index}`}/>
+      )}
       </div>
       <Review config={config} data={reviews} dataExists={false} product={product}/>
 

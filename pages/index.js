@@ -1,6 +1,7 @@
 import { FormControl, InputGroup } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 import Button from '../components/button'
+import Guarantees from '../components/guarantees/guarantees';
 
 const Home = ({config}) => {
 
@@ -70,6 +71,7 @@ const Home = ({config}) => {
               </form>
             </div>
           }
+          <Guarantees />
       </div>
 
       <style jsx>{`

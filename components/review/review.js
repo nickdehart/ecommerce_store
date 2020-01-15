@@ -1,4 +1,6 @@
 import Swal from 'sweetalert2'
+import DesktopTable from './desktopTable'
+import MobileTable from './mobileTable'
 
 const Review = ({config, data, product}) => {
    const [page, setPage] = React.useState(0);
@@ -147,7 +149,7 @@ const Review = ({config, data, product}) => {
          </form>
          {data.length > 0 ?
          <>
-         <table className="table">
+         {/* <table className="table">
             <tbody>
                {items.map((item, index) => {
                   if(dataObj[0].reviews[item])
@@ -183,7 +185,21 @@ const Review = ({config, data, product}) => {
                })
                }
             </tbody>
-         </table>
+         </table> */}
+         <div className="desktop-table">
+            <DesktopTable 
+               dataObj={dataObj}
+               items={items}
+               getStars={getStars}
+            />
+         </div>
+         <div className="mobile-table">
+            <MobileTable 
+               dataObj={dataObj}
+               items={items}
+               getStars={getStars}
+            />
+         </div>
          <div className="page-controls">
             <button onClick={() => decrementPage(page)}>Previous</button>
             <div>Page {page + 1}</div>
@@ -201,7 +217,12 @@ const Review = ({config, data, product}) => {
          }
          <style jsx>{`
             @media (max-width: 767px){
-               .images {
+               .desktop-table {
+                  display: none;
+               }
+            }
+            @media (min-width: 768px){
+               .mobile-table {
                   display: none;
                }
             }
