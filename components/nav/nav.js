@@ -4,11 +4,18 @@ import style from './nav.style'
 
 const Navibar = ({ config, cartCount }) => {
 
+  const [icon, setIcon] = React.useState(true);
+
   return (
     <Navbar expand="lg" className="navi" style={{borderBottom: "1px solid #e8e9eb"}}>
       <div className="container">
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
+          <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setIcon(!icon)}>
+            {icon ?
+              <i className="fas fa-bars" style={{fontSize: '28px', width: '25px'}}></i>
+            :
+              <i className="fas fa-times" style={{fontSize: '28px', width: '25px'}}></i>
+            }
+          </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
               {config.header.links.map(({ href, label }, index) => (
@@ -20,8 +27,11 @@ const Navibar = ({ config, cartCount }) => {
           <div className="navbar-brand col-4 middle">
             <Link route="/">
               <a className="a-logo">
-                {config.logo && <img src={config.logo} width="30" height="30" class="d-inline-block align-top" alt={config.title} /> }
-                {config.title}
+                {config.logo ? 
+                  <img src={config.logo.src} width={config.logo.width} height={config.logo.height} alt={config.title} /> 
+                  :
+                  config.title
+                }
               </a>
             </Link>
           </div>

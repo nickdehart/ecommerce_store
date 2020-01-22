@@ -93,7 +93,7 @@ const Review = ({config, data, product}) => {
       <div className="container">
          <div className="review-actions">
             <div className="stars">
-               {data.length > 0 &&
+               {data.length > 1 &&
                <>
                   <div>
                      {getStars(5)}
@@ -147,45 +147,8 @@ const Review = ({config, data, product}) => {
                Submit Review
             </button>
          </form>
-         {data.length > 0 ?
+         {data.length > 1 ?
          <>
-         {/* <table className="table">
-            <tbody>
-               {items.map((item, index) => {
-                  if(dataObj[0].reviews[item])
-                  {
-                     return (
-                     <tr key={`review-row-${index}`}>
-                        <td style={{width: '130px'}}>
-                           <div className="user-container">
-                              <i className="fas fa-user"></i>
-                              <p>{dataObj[0].reviews[item].username}</p>
-                           </div>
-                           <p className="date">{new Date(dataObj[0].reviews[item].date).toLocaleDateString()}</p>
-                           <div className="star-container">
-                              <small>{dataObj[0].reviews[item].rating}</small>
-                              {getStars(dataObj[0].reviews[item].rating)}
-                           </div>
-                        </td>
-                        <td>
-                           <p>{dataObj[0].reviews[item].text}</p>
-                        </td>
-                        <td className="images">
-                           {dataObj[0].reviews[item].images.map((url, index) => {
-                              return (
-                              <a href={url} target="_blank" key={`review-img-${index}`}>
-                                 <img src={url} className="img-max" />
-                              </a>
-                           )
-                        })}
-                        </td>
-                     </tr>
-                     )
-                  }
-               })
-               }
-            </tbody>
-         </table> */}
          <div className="desktop-table">
             <DesktopTable 
                dataObj={dataObj}

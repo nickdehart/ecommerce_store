@@ -9,10 +9,15 @@ export default (req, res) => {
          connectionString = `mongodb://${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`
       MongoClient.connect(connectionString, (err, client) => {
          if(err) {
-            client.close()
+            try {
+               client.close()
+            } catch (e) {
+               console.error(e)
+            }
             res.status(400).send({
                message: err
             });
+            return
          }
 
          const db = client.db(process.env.DB_NAME);
@@ -25,7 +30,6 @@ export default (req, res) => {
             client.close()
             res.status(200).send('success')
          } catch (e) {
-            client.close()
             res.status(400).send({
                message: e
             });

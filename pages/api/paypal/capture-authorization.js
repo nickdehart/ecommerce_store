@@ -48,7 +48,11 @@ async function saveAuthorization(authorization) {
    MongoClient.connect(connectionString, (err, client) => {
       if(err) {
          console.log(err)
-         client.close()
+         try {
+            client.close()
+         } catch (e) {
+            console.error(e)
+         }
       }
 
       const db = client.db(process.env.DB_NAME);
@@ -58,7 +62,6 @@ async function saveAuthorization(authorization) {
          client.close()
       } catch (e) {
          console.log(e)
-         client.close()
       }
       
    })

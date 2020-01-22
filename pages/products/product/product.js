@@ -1,5 +1,5 @@
+import Router from 'next/router';
 import { FormControl, FormGroup, FormLabel } from 'react-bootstrap'
-import Swal from 'sweetalert2'
 
 import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
@@ -57,11 +57,7 @@ class Product extends React.Component {
         cart[i].quantity += product.quantity
         setCartCount(cart[i].quantity)
         sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
-        Swal.fire(
-          'Success!',
-          'Added to Cart',
-          'success'
-        )
+        Router.push('/cart');
         return
       }
     }
@@ -73,11 +69,7 @@ class Product extends React.Component {
       quantity: product.quantity
     })
     sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
-    Swal.fire(
-      'Success!',
-      'Added to Cart',
-      'success'
-    )
+    Router.push('/cart');
   }
 
   changeQuantity = (e) => {
@@ -142,8 +134,8 @@ class Product extends React.Component {
                 min={1}
                 onChange={this.changeQuantity}
               />
-              <Button variant="button" fullWidth={true}>Add To Cart</Button>
-              <PaypalButton
+              <Button variant="button" fullWidth>Add To Cart</Button>
+              {/* <PaypalButton
                 cart={[{
                   name: product.name,
                   number: product.number,
@@ -152,7 +144,7 @@ class Product extends React.Component {
                 commit={true}
                 currency={'USD'}
                 total={product.price * quantity}
-              />
+              /> */}
             </FormGroup>
           </form>
           <Guarantees />

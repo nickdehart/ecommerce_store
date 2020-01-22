@@ -14,11 +14,12 @@ class MyDocument extends Document {
     let CLIENT_ID = process.env.CLIENT_ID;
     return (
       <Html>
-        <Head />
+        <Head>
+          <meta name="description" content="Free Shipping on All Orders. Online Home Store for Decor, Gadgets Outdoors and More. Shop myBetterHomeGoods for an ever-changing selection of amazing finds at incredible savings."></meta>
+          <script src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID ? CLIENT_ID : 'sb' }&disable-funding=credit,card`} />
+        </Head>
          <body>
-               <script
-                  src={`https://www.paypal.com/sdk/js?client-id=${CLIENT_ID ? CLIENT_ID : 'sb' }`}>
-               </script>
+               
                <Main />
                <NextScript />
          </body>

@@ -59,6 +59,11 @@ const PaypalButton = ({total, cart}) => {
     options={{
       clientId: process.env.PAYPAL_CLIENT_ID
     }}
+    style={{
+      layout: 'horizontal',
+      label: 'buynow',
+      tagline: true
+    }}
   />
   );
 }

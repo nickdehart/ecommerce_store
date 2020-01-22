@@ -30,7 +30,7 @@ class Button extends Component {
    }
    
    render() {
-      const { href, variant, fullWidth, children, disabled } = this.props;
+      const { href, variant, fullWidth, children, disabled, invert } = this.props;
       return (
       <React.Fragment>
          { variant == 'button' ?
@@ -43,7 +43,7 @@ class Button extends Component {
             </>
             :
             <Link route={href ? href : '/'}>
-               <a className="button-style">{children}</a>
+               <a className={fullWidth ? "custom-style" : "button-style"}>{children}</a>
             </Link>
 
          }
@@ -53,7 +53,7 @@ class Button extends Component {
                padding: 1rem 2rem;
                margin-top: 27px;
                color: #fff;
-               background: ${disabled ? this.pSBC ( 0.42, config.theme.color ) : config.theme.color};
+               background: ${disabled ? '#dddddd' : invert ? 'white' : config.theme.color};
                text-decoration: none;
                text-transform: uppercase;
                letter-spacing: 0.08em;
@@ -61,32 +61,34 @@ class Button extends Component {
                font-size: 14px;
                font-weight: 600;
                white-space: nowrap;
-               border: 1px solid transparent;
+               border: 2px solid transparent;
             }
             .button-style:hover {
                color: #fff;
-               background: ${this.pSBC ( 0.42, config.theme.color )};
+               background: ${this.pSBC ( 0.15, config.theme.color )};
+               border-color: ${invert ? this.pSBC ( 0.15, config.theme.color ) : 'transparent'};
             }
             .custom-style {
                display: flex; 
                justify-content: center;
                width: 100%;
-               background-color: ${disabled ? this.pSBC ( 0.42, config.theme.color ) : config.theme.color};
-               color: white;
+               background-color: ${disabled ? '#dddddd' : invert ? 'white' : config.theme.color};
+               color: ${invert ? config.theme.color : 'white'};
                text-decoration: none;
                text-transform: uppercase;
                letter-spacing: 0.08em;
                font-size: 16px;
                font-weight: 600;
                white-space: nowrap;
-               border: 1px solid transparent;
+               border: 2px solid ${invert ? config.theme.color : 'transparent'};
                border-radius: 4px;
                margin: 17px auto 17px;
                padding: 14px 0px 14px
              }
             .custom-style:hover {
                color: #fff;
-               background: ${this.pSBC ( 0.10, config.theme.color )};
+               background: ${this.pSBC ( 0.15, config.theme.color )};
+               border-color: ${invert ? this.pSBC ( 0.15, config.theme.color ) : 'transparent'};
             }
          `}</style>
       </React.Fragment>

@@ -2,6 +2,12 @@ import products from './products'
 
 const config = {
    title: "Ecommerce Store",
+   // in case you have a logo
+   logo: {
+      src: '/logo.svg',
+      width: '175px',
+      height: '30spx'
+   },
    theme: {
       color: '#ee6e73',
    },
