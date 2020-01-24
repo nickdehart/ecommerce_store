@@ -6,6 +6,7 @@ export default css`
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
     Helvetica, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 nav {
   text-align: center;

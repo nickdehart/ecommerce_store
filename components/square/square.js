@@ -73,7 +73,7 @@ class Square extends React.Component {
       const unavailableView = <div className="sq-wallet-unavailable">Unavailable</div>
 
      return (
-       <div className="container" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+       <div className="container my-3" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
  
          <SquarePaymentForm
            sandbox={true}
@@ -83,44 +83,6 @@ class Square extends React.Component {
            createVerificationDetails={this.createVerificationDetails}
            locationId={'0B4C2736GW0A3'}
          >
-            <fieldset>
-               <div className="input-container">
-                  Billing Information
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">First Name</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">Last Name</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">E-mail</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">Phone</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">Address Line 1</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">Address Line 2</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">City</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-               <div className="input-container">
-                  <span className="sq-label">Country</span>
-                  <input className="sq-input px-2 py-2"  />
-               </div>
-            </fieldset>
-            <hr />
             <GooglePayButton loadingView={loadingView} unavailableView={unavailableView} />
             <fieldset className="sq-fieldset">
                <CreditCardNumberInput />

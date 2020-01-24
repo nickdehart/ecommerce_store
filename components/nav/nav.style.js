@@ -6,6 +6,7 @@ export default css`
   margin: 0;
   font-family: -apple-system, Work Sans, BlinkMacSystemFont, Avenir Next, Avenir,
     Helvetica, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 .right {
   text-align: right;
