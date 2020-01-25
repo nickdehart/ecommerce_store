@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import Button from '../../components/button'
 import Guarantees from '../../components/guarantees/guarantees';
 import Square from '../../components/square/square';
@@ -33,6 +34,8 @@ class Checkout extends React.Component {
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
       this.setState({cart: cart ? cart : []})
       this.calculateTotals(cart)
+    } else {
+      Router.push('/cart');
     }
   }
 
@@ -41,6 +44,7 @@ class Checkout extends React.Component {
      let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
      this.setState({cart: cart ? cart : []})
      this.calculateTotals(cart)
+     this.props.cartCount === 0 && Router.push('/cart');
    }
  }
 
@@ -163,78 +167,68 @@ class Checkout extends React.Component {
     }
 
     return (
-    <>
       <div className="container my-4">
-            {cart.length === 0 ?
-            <div className="cart-content">
-               <p>Your cart is currently empty.</p>
-               <div>
-                  <Button href="/products">Continue Shopping</Button>
-               </div>
-            </div>
-            :
-            <table className="table table-width mx-auto">
-               <thead>
-                  <tr>
-                     <th colSpan={2} className="header">
-                        <button className="head-btn" onClick={() => this.setState({summaryExpanded: !summaryExpanded})}>
-                           <i className="fas fa-shopping-cart fa-lg"></i>
-                           &nbsp;&nbsp;
-                           {summaryExpanded ? 'Hide order summary' : 'Show order summary'}
-                           &nbsp;&nbsp;
-                           {summaryExpanded ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
-                        </button>
-                     </th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {summaryExpanded &&
-                  <>
-                  <tr>
-                     <td>Items:</td>
-                     <td className="num">
-                        ${total.toFixed(2)}
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>Discounts:</td>
-                     <td className="num">
-                        ${(total - discountedTotal).toFixed(2)}
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>Shipping & Handling:</td>
-                     <td className="num">
-                        $0.00
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>Total before tax:</td>
-                     <td className="num">
-                        ${discountedTotal.toFixed(2)}
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        Estimated tax to be collected:
-                     </td>
-                     <td className="num">
-                        ${estimatedTax.toFixed(2)}
-                     </td>
-                  </tr>
-                  </>
-                  }
-                  <tr>
-                     <td className="total">
-                        Order total:
-                     </td>
-                     <td className="total num">
-                        ${(discountedTotal + estimatedTax).toFixed(2)}
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-            }
+         <table className="table table-width mx-auto">
+            <thead>
+               <tr>
+                  <th colSpan={2} className="header">
+                     <button className="head-btn" onClick={() => this.setState({summaryExpanded: !summaryExpanded})}>
+                        <i className="fas fa-shopping-cart fa-lg"></i>
+                        &nbsp;&nbsp;
+                        {summaryExpanded ? 'Hide order summary' : 'Show order summary'}
+                        &nbsp;&nbsp;
+                        {summaryExpanded ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
+                     </button>
+                  </th>
+               </tr>
+            </thead>
+            <tbody>
+               {summaryExpanded &&
+               <>
+               <tr>
+                  <td>Items:</td>
+                  <td className="num">
+                     ${total.toFixed(2)}
+                  </td>
+               </tr>
+               <tr>
+                  <td>Discounts:</td>
+                  <td className="num">
+                     ${(total - discountedTotal).toFixed(2)}
+                  </td>
+               </tr>
+               <tr>
+                  <td>Shipping & Handling:</td>
+                  <td className="num">
+                     $0.00
+                  </td>
+               </tr>
+               <tr>
+                  <td>Total before tax:</td>
+                  <td className="num">
+                     ${discountedTotal.toFixed(2)}
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     Estimated tax to be collected:
+                  </td>
+                  <td className="num">
+                     ${estimatedTax.toFixed(2)}
+                  </td>
+               </tr>
+               </>
+               }
+               <tr>
+                  <td className="total">
+                     Order total:
+                  </td>
+                  <td className="total num">
+                     ${(discountedTotal + estimatedTax).toFixed(2)}
+                  </td>
+               </tr>
+            </tbody>
+         </table>
          <Guarantees />
          {step === 0 && 
          <>
@@ -268,7 +262,6 @@ class Checkout extends React.Component {
          </>
          }
          <Stepper config={config} steps={steps} currentStep={step} />
-      </div>
 
       <style jsx>{`
       .address2{
@@ -318,7 +311,7 @@ class Checkout extends React.Component {
          font-size: 17px;
       }
       `}</style>
-    </>
+    </div>
     )
   }
 }
