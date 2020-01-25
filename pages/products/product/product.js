@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import { FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 
-import PaypalButton from '../../../components/paypal';
+// import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
 import Review from '../../../components/review';
 import Pixel from '../../../components/pixel';
