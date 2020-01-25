@@ -1,0 +1,21 @@
+{
+   "routes": [
+      {
+        "src": "/products/(.*)",
+        "headers": { "cache-control": "s-maxage=604800" },
+        "dest": "/products/$1"
+      }
+   ],
+   "build": {
+     "env": {
+         "USPS_ID": "151NONE07949",
+         "DB_HOST": "mongodb+srv://nick:EwCtmF89AmsIsD@@cluster0-1sohz.mongodb.net/test?retryWrites=true&w=majority",
+         "DB_NAME": "ecommerce",
+         "DB_CONTACT": "messages",
+         "DB_SUBSCRIBE": "subscribe",
+         "DB_REVIEW": "reviews",
+         "DB_ORDERS": "orders",
+         "NODE_ENV": "sandbox"
+     }
+   }
+ }
