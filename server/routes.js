@@ -8,4 +8,4 @@ routes
 .add({ name: 'returns', pattern: '/legal/returns', page: '/legal/returns' })
 .add({ name: 'terms', pattern: '/legal/terms', page: '/legal/terms' })
 .add('products')
-.add({ name: 'product', pattern: '/products/:id', page: '/products/product' })
+.add({ name: 'product', pattern: '/product/:id', page: '/product/product' })

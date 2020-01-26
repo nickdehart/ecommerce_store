@@ -27,7 +27,7 @@ const MobileTable = (props) => {
                <React.Fragment key={`cart-item-${index}`}>
                <tr >
                   <td style={{display: 'flex'}}>
-                     <Link route={`/products/${item.id}`}>
+                     <Link route={`/product/${item.id}`}>
                         <img src={`${config.products[item.number].assets}${config.products[item.number].images[0]}`} 
                            className="img-fluid cart-img mr-3"/>
                      </Link>

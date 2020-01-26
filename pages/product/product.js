@@ -1,11 +1,11 @@
 import Router from 'next/router';
 
 // import PaypalButton from '../../../components/paypal';
-import Button from '../../../components/button/button';
-import Review from '../../../components/review';
-import Pixel from '../../../components/pixel';
-import Guarantees from '../../../components/guarantees/guarantees';
-import Description from '../../../components/description/description';
+import Button from '../../components/button/button';
+import Review from '../../components/review';
+import Pixel from '../../components/pixel';
+import Guarantees from '../../components/guarantees/guarantees';
+import Description from '../../components/description/description';
 
 class Product extends React.Component {
   static getInitialProps({query}){

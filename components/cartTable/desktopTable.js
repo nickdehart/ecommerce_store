@@ -19,12 +19,12 @@ const DesktopTable = (props) => {
                return (
                <tr key={`cart-item-${index}`}>
                   <td style={{display: 'flex'}}>
-                     <Link route={`/products/${item.id}`}>
+                     <Link route={`/product/${item.id}`}>
                         <img src={`${config.products[item.number].assets}${config.products[item.number].images[0]}`} 
                         className="img-fluid cart-img"/>
                      </Link>
                      <div className="ml-3">
-                        <Link route={`/products/${item.id}`}>
+                        <Link route={`/product/${item.id}`}>
                            <h5 className="item-name">{config.products[item.number].name}</h5>
                         </Link>
                         <small className="remove-btn" onClick={() => remove(item)}>Remove</small>
