@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const sanitize = require('mongo-sanitize');
+const config = require('../../../config');
 
 // POST creates reviews if none exist for item
 const post = (req, res) => {
@@ -17,8 +18,8 @@ const post = (req, res) => {
          return
       }
 
-      const db = client.db(process.env.DB_NAME);
-      const collection = db.collection(process.env.DB_REVIEW);
+      const db = client.db(config.default.db.name);
+      const collection = db.collection(config.default.db.reviews);
       Object.keys(req.body).forEach(param => {
          req.body[param] = sanitize(req.body[param])
       })

@@ -11,12 +11,12 @@ const config = {
    theme: {
       color: '#ee6e73',
    },
-   mongo: {
-      DB_NAME: 'ecommerce',
-      DB_CONTACT: 'messages',
-      DB_SUBSCRIBE: 'subscribe',
-      DB_REVIEW: 'reviews',
-      DB_ORDERS: 'orders'
+   db: {
+      name: 'ecommerce', // name of the database to be used
+      contact: 'messages', // collection for contact
+      subscribe: 'subscribe', // collection for email subscriptions
+      reviews: 'reviews', // collection for reviews
+      orders: 'orders' // collection for orders
    },
    home: {
       banner: '/banner.jpg',

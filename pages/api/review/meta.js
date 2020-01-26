@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const config = require('../../../config');
 
 // GETs avg rating of all products
 export default (req, res) => {
@@ -17,8 +18,8 @@ export default (req, res) => {
             return
          }
 
-         const db = client.db(process.env.DB_NAME);
-         const collection = db.collection(process.env.DB_REVIEW);
+         const db = client.db(config.default.db.name);
+         const collection = db.collection(config.default.db.reviews);
          try {
 
             collection.aggregate([

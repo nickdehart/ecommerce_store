@@ -20,8 +20,8 @@ export default (req, res) => {
             return
          }
 
-         const db = client.db(process.env.DB_NAME);
-         const collection = db.collection(process.env.DB_CONTACT);
+         const db = client.db(config.default.db.name);
+         const collection = db.collection(config.default.db.subscribe);
          try {
             Object.keys(req.body).forEach(param => {
                req.body[param] = sanitize(req.body[param])

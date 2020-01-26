@@ -1,3 +1,4 @@
+const config = require('../../../config');
 // 1. Set up your server to make calls to PayPal
 const MongoClient = require('mongodb').MongoClient;
 
@@ -55,8 +56,8 @@ async function saveAuthorization(authorization) {
          }
       }
 
-      const db = client.db(process.env.DB_NAME);
-      const collection = db.collection(process.env.DB_ORDERS);
+      const db = client.db(config.default.db.name);
+      const collection = db.collection(config.default.db.orders);
       try {
          collection.insertOne(authorization.result)
          client.close()

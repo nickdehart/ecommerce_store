@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const sanitize = require('mongo-sanitize');
+const config = require('../../config');
 
 export default (req, res) => {
    if (req.method === 'POST') {
@@ -18,8 +19,8 @@ export default (req, res) => {
             });
          }
 
-         const db = client.db(process.env.DB_NAME);
-         const collection = db.collection(process.env.DB_CONTACT);
+         const db = client.db(config.default.db.name);
+         const collection = db.collection(config.default.db.contact);
          try {
             Object.keys(req.body).forEach(param => {
                req.body[param] = sanitize(req.body[param])
