@@ -106,7 +106,6 @@ class Checkout extends React.Component {
       let inputValidated;
       let data;
       if(e.target.country.value === "United States"){
-         // 151NONE07949
          let xmlAddress = `` +
             `<AddressValidateRequest USERID="${process.env.USPS_ID}">` +
                `<Revision>1</Revision>` +

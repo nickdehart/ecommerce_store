@@ -1,0 +1,8 @@
+{
+   "build": {
+     "env": {
+         "USPS_ID": "@usps_id",
+         "DB_HOST": "@db_host"
+     }
+   }
+ }
