@@ -1,4 +1,3 @@
-import { FormControl, InputGroup } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 import Button from '../components/button'
 import Guarantees from '../components/guarantees/guarantees';
@@ -57,17 +56,18 @@ const Home = ({config}) => {
               </p>
               <p style={{textAlign: 'center'}}>Sign up to our newsletter for promotions and savings!</p>
               <form onSubmit={handleSubmit} className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-6 mx-auto">
-                <InputGroup className="mb-3">
-                  <FormControl
+                <div className="input-group mb-3">
+                  <input
+                    className="form-control"
                     placeholder="Email Address"
                     name="email"
                     type="email"
                     required
                   />
-                  <InputGroup.Append>
+                  <div className="input-group-append">
                     <button className="sub-button" type="submit" disabled={disable}>Subscribe</button>
-                  </InputGroup.Append>
-                </InputGroup>
+                  </div>
+                </div>
               </form>
             </div>
           }

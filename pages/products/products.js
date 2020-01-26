@@ -1,4 +1,3 @@
-import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 
 import ProductCard from '../../components/productCard'
 
@@ -33,20 +32,21 @@ class Products extends React.Component {
       <>
         <div className="container col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 my-4 mx-auto">
           <form onSubmit={this.handleSubmit}>
-            <InputGroup className="mb-3">
-              <FormControl
+            <div className="input-group mb-3">
+              <input
+                className="form-control"
                 placeholder="Search..."
                 name="search"
               />
-              <InputGroup.Append>
-                <Button variant="outline-secondary" type="submit"><i className="fas fa-search"></i></Button>
+              <div className="input-group-append">
+                <button className="btn btn-outline-secondary" type="submit"><i className="fas fa-search"></i></button>
                 {
                   phrase !== '' &&
-                  <Button variant="outline-danger" onClick={() => this.setState({phrase: ''})}><i className="fas fa-times"></i></Button>
+                  <button className="btn btn-outline-danger" onClick={() => this.setState({phrase: ''})}><i className="fas fa-times"></i></button>
                 }
-              </InputGroup.Append>
+              </div>
               
-            </InputGroup>
+            </div>
           </form>
         </div>
         <div className="container items">

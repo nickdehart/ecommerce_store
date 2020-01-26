@@ -1,5 +1,4 @@
 import Router from 'next/router';
-import { FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 
 // import PaypalButton from '../../../components/paypal';
 import Button from '../../../components/button/button';
@@ -123,10 +122,10 @@ class Product extends React.Component {
           <p className="price mt-2">{product.multiplier && <s>{`$${Math.floor(product.price * product.multiplier)}.99`}</s>}${product.price}</p>
           <p>{product.description}</p>
           <form onSubmit={(e) => this.addToCart(e, product)}>
-            <FormGroup className="mb-3">
-              <FormLabel>Quantity:</FormLabel>
-              <FormControl
-                className="col-3"
+            <div className="form-group mb-3">
+              <label>Quantity:</label>
+              <input
+                className="form-control col-3"
                 name="quantity"
                 id='quantifier'
                 type="number"
@@ -145,7 +144,7 @@ class Product extends React.Component {
                 currency={'USD'}
                 total={product.price * quantity}
               /> */}
-            </FormGroup>
+            </div>
           </form>
           <Guarantees />
           <div className="table-responsive">
