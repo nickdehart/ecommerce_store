@@ -29,14 +29,23 @@ class Checkout extends React.Component {
   }
 
   componentDidMount() {
-    const { cartCount } = this.props;
-    if(cartCount > 0){
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
+      let shippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'))
+      let billingAddress = JSON.parse(sessionStorage.getItem('billingAddress'))
+      if(shippingAddress && billingAddress){
+         this.setState({
+            step: 2,
+            shippingAddress: shippingAddress,
+            billingAddress: billingAddress
+         })
+      } else if (shippingAddress) {
+         this.setState({step: 1, shippingAddress: shippingAddress})
+      }
       this.setState({cart: cart ? cart : []})
+      if(!cart || cart.length === 0){
+         Router.push('/cart');
+      }
       this.calculateTotals(cart)
-    } else {
-      Router.push('/cart');
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -44,7 +53,9 @@ class Checkout extends React.Component {
      let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
      this.setState({cart: cart ? cart : []})
      this.calculateTotals(cart)
-     this.props.cartCount === 0 && Router.push('/cart');
+     if (this.props.cartCount === 0) {
+      Router.push('/cart');
+     }
    }
  }
 
@@ -136,15 +147,20 @@ class Checkout extends React.Component {
          }
       } 
       if(step === 0){
-         this.setState({shippingAddress: inputValidated ? inputValidated : input})
+         sessionStorage.setItem('shippingAddress', JSON.stringify(inputValidated ? inputValidated : input))
          if(checkedAddress){
-            this.setState({step: 1})
+            this.setState({step: 1, shippingAddress: inputValidated ? inputValidated : input})
          } else {
-            this.setState({step: 2})
+            this.setState({
+               step: 2, 
+               shippingAddress: inputValidated ? inputValidated : input,
+               billingAddress: inputValidated ? inputValidated : input
+            })
+            sessionStorage.setItem('billingAddress', JSON.stringify(inputValidated ? inputValidated : input))
          }
       } else {
-         this.setState({billingAddress: inputValidated ? inputValidated : input})
-         this.setState({step: 2})
+         this.setState({step: 2, billingAddress: inputValidated ? inputValidated : input})
+         sessionStorage.setItem('billingAddress', JSON.stringify(inputValidated ? inputValidated : input))
       }
    }
   
@@ -242,11 +258,21 @@ class Checkout extends React.Component {
                </span>
                Billing address different than Shipping?
             </div>
-            <AddressForm config={config} text={`Continue to ${checkedAddress ? "Billing" : "Payment"}`} handleSubmit={this.handleSubmit} />
+            <AddressForm 
+               config={config} 
+               text={`Continue to ${checkedAddress ? "Billing" : "Payment"}`} 
+               fields={shippingAddress}
+               handleSubmit={this.handleSubmit} 
+            />
          </>
          }
          {step === 1 &&
-            <AddressForm config={config} text={`Continue to Payment`} handleSubmit={this.handleSubmit} />
+            <AddressForm 
+               config={config} 
+               fields={billingAddress}
+               text={`Continue to Payment`} 
+               handleSubmit={this.handleSubmit} 
+            />
          }
          {step === 2 && 
          <>
@@ -260,6 +286,17 @@ class Checkout extends React.Component {
             </table>
             <Square total={parseFloat((discountedTotal + estimatedTax).toFixed(2))}/> 
          </>
+         }
+         {step > 0 &&
+         <div className="my-3" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <button 
+               style={{border: 'none', background: 'transparent', color: '#495057'}} 
+               onClick={() => this.setState({step: (step - 1)})}
+            >
+               <i className="fas fa-long-arrow-alt-left"></i>
+               &nbsp;Previous
+            </button>
+         </div>
          }
          <Stepper config={config} steps={steps} currentStep={step} />
 
