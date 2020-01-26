@@ -28,7 +28,5 @@
     "sweetalert2": "^9.5.3",
     "xml-js": "^1.6.11"
   },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2"
-  }
+  "devDependencies": {}
 }
