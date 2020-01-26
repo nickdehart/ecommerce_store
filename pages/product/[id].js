@@ -6,11 +6,9 @@ import Review from '../../components/review';
 import Pixel from '../../components/pixel';
 import Guarantees from '../../components/guarantees/guarantees';
 import Description from '../../components/description/description';
+import NotFound from '../../components/notFound';
 
 class Product extends React.Component {
-  static getInitialProps({query}){
-    return {query}
-  }
 
   constructor(props) {
     super(props);
@@ -18,12 +16,14 @@ class Product extends React.Component {
       activeIndex: 0,
       reviews: [],
       meta: [],
-      quantity: 1
+      quantity: 1,
+      query: {}
     };
   }
 
   componentDidMount() {
-    const { query } = this.props;
+    const query = Router.query
+    this.setState({query: query})
     fetch(`/api/review?id=${query.id}`)
       .then(response => response.json())
       .then(data => {
@@ -76,8 +76,8 @@ class Product extends React.Component {
   }
 
   render() {
-    const { config, query } = this.props;
-    const { activeIndex, reviews, meta, quantity } = this.state;
+    const { config } = this.props;
+    const { activeIndex, reviews, meta, quantity, query } = this.state;
 
     let product;
     for(var i = 0; i < config.products.length; i++){
@@ -98,6 +98,7 @@ class Product extends React.Component {
     }
 
   return (
+    product ? 
     <>
       <Pixel name={product.name ? product.name : 'FACEBOOK_PIXEL_1'} />
       <div className="container product">
@@ -226,6 +227,8 @@ class Product extends React.Component {
         }
       `}</style>
     </>
+    :
+    <NotFound />
   )
 }
 }

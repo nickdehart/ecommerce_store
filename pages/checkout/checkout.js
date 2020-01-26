@@ -1,5 +1,4 @@
 import Router from 'next/router';
-import Button from '../../components/button'
 import Guarantees from '../../components/guarantees/guarantees';
 import Square from '../../components/square/square';
 import AddressForm from '../../components/addressForm';
@@ -107,8 +106,9 @@ class Checkout extends React.Component {
       let inputValidated;
       let data;
       if(e.target.country.value === "United States"){
+         // 151NONE07949
          let xmlAddress = `` +
-            `<AddressValidateRequest USERID="151NONE07949">` +
+            `<AddressValidateRequest USERID="${process.env.USPS_ID}">` +
                `<Revision>1</Revision>` +
                `<Address>` +
                   `<Address1>${input.address1}</Address1>` +

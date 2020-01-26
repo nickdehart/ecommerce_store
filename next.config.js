@@ -8,6 +8,7 @@ module.exports = withCSS({
    env: {
       PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
       PAYPAL_CLIENT_SECRET: process.env.PAYPAL_CLIENT_SECRET,
+      USPS_ID: process.env.USPS_ID,
       DB_HOST: process.env.DB_HOST,
       DB_NAME: process.env.DB_NAME,
       DB_CONTACT: process.env.DB_CONTACT,
