@@ -1,11 +1,11 @@
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 
 const DesktopTable = (props) => {
    
    const { config, cart, remove, update, total, discountedTotal } = props;
 
    return (
-      <table className="table desktop-table">
+      <table className="table">
          <thead>
             <tr>
                <th scope="col">Product</th>
@@ -19,12 +19,12 @@ const DesktopTable = (props) => {
                return (
                <tr key={`cart-item-${index}`}>
                   <td style={{display: 'flex'}}>
-                     <Link route={`/product/${item.id}`}>
+                     <Link href={`/product/${item.id}`}>
                         <img src={`${config.products[item.number].assets}${config.products[item.number].images[0]}`} 
                         className="img-fluid cart-img"/>
                      </Link>
                      <div className="ml-3">
-                        <Link route={`/product/${item.id}`}>
+                        <Link href={`/product/${item.id}`}>
                            <h5 className="item-name">{config.products[item.number].name}</h5>
                         </Link>
                         <small className="remove-btn" onClick={() => remove(item)}>Remove</small>
@@ -90,48 +90,41 @@ const DesktopTable = (props) => {
          </tbody>
 
          <style jsx>{`
-         @media (max-width: 767px){
-            .desktop-table {
-               display: none;
-            }
+         .cart-img {
+            max-width: 200px;
          }
-         @media (min-width: 768px){
-            .cart-img {
-               max-width: 200px;
-            }
-            .cart-img:hover {
-               cursor: pointer;
-            }
-            .item-name:hover {
-               cursor: pointer;
-            }
-            .remove-btn {
-               border: 1px solid transparent;
-               padding: 5px;
-               border-bottom: 1px solid gray;
-            }
-            .remove-btn:hover {
-               cursor: pointer;
-               border: 1px solid gray
-            }
-            .submit-btn {
-               text-transform: uppercase;
-               color: white;
-               background-color: ${config.theme.color};
-               font-size: small;
-               font-weight: 600;
-               text-align: center;
-               width: 80px;
-               padding: 5px;
-               margin: 5px 5px 5px 0px;
-               border: 0px;
-            }
-            s {
-               color: red;
-            }
-            p {
-               margin-bottom: 0px;
-            }
+         .cart-img:hover {
+            cursor: pointer;
+         }
+         .item-name:hover {
+            cursor: pointer;
+         }
+         .remove-btn {
+            border: 1px solid transparent;
+            padding: 5px;
+            border-bottom: 1px solid gray;
+         }
+         .remove-btn:hover {
+            cursor: pointer;
+            border: 1px solid gray
+         }
+         .submit-btn {
+            text-transform: uppercase;
+            color: white;
+            background-color: ${config.theme.color};
+            font-size: small;
+            font-weight: 600;
+            text-align: center;
+            width: 80px;
+            padding: 5px;
+            margin: 5px 5px 5px 0px;
+            border: 0px;
+         }
+         s {
+            color: red;
+         }
+         p {
+            margin-bottom: 0px;
          }
          `}</style>
       </table>

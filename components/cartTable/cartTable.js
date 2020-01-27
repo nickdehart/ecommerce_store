@@ -1,5 +1,6 @@
 import DesktopTable from './desktopTable'
 import MobileTable from './mobileTable'
+import useWindowSize from '../../hooks/useWindowSize'
 
 const CartTable = (props) => {
 
@@ -12,8 +13,11 @@ const CartTable = (props) => {
       discountedTotal
    } = props;
 
+   const size = useWindowSize();
+
    return (
    <>
+      {size && size.width > 767 &&
       <DesktopTable 
          config={config} 
          cart={cart} 
@@ -22,6 +26,8 @@ const CartTable = (props) => {
          total={total} 
          discountedTotal={discountedTotal} 
       />
+      }
+      {size && size.width < 768 &&
       <MobileTable 
          config={config} 
          cart={cart} 
@@ -30,6 +36,7 @@ const CartTable = (props) => {
          total={total} 
          discountedTotal={discountedTotal} 
       />
+      }
 
    <style jsx>{`
    `}</style>

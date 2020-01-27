@@ -1,11 +1,13 @@
 import Swal from 'sweetalert2'
 import DesktopTable from './desktopTable'
 import MobileTable from './mobileTable'
+import useWindowSize from '../../hooks/useWindowSize'
 
 const Review = ({config, data, product}) => {
    const [page, setPage] = React.useState(0);
    const [items, setItems] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
    const [write, setWrite] = React.useState(false);
+   const size = useWindowSize();
 
    let dataObj = {}
    for(var i = 0; i < data.length; i++){
@@ -149,20 +151,20 @@ const Review = ({config, data, product}) => {
          </form>
          {data.length > 1 ?
          <>
-         <div className="desktop-table">
+         {size && size.width > 767 &&
             <DesktopTable 
                dataObj={dataObj}
                items={items}
                getStars={getStars}
             />
-         </div>
-         <div className="mobile-table">
+         }
+         {size && size.width < 768 &&
             <MobileTable 
                dataObj={dataObj}
                items={items}
                getStars={getStars}
             />
-         </div>
+         }
          <div className="page-controls">
             <button onClick={() => decrementPage(page)}>Previous</button>
             <div>Page {page + 1}</div>
@@ -179,16 +181,6 @@ const Review = ({config, data, product}) => {
          </div>
          }
          <style jsx>{`
-            @media (max-width: 767px){
-               .desktop-table {
-                  display: none;
-               }
-            }
-            @media (min-width: 768px){
-               .mobile-table {
-                  display: none;
-               }
-            }
             button {
                color: white;
                background: ${config.theme.color};

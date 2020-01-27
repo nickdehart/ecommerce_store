@@ -1,4 +1,4 @@
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 import AnimateHeight from 'react-animate-height';
 
 const Navibar = ({ config, cartCount }) => {
@@ -18,12 +18,12 @@ const Navibar = ({ config, cartCount }) => {
 
         <div className="navbar-nav desktop-nav">
             {config.header.links.map(({ href, label }, index) => (
-                <Link route={href} key={`navlink-${index}`}><a className="nav-link a-link">{label}</a></Link>
+                <Link href={href} key={`navlink-${index}`}><a className="nav-link a-link">{label}</a></Link>
             ))}
         </div>
 
         <div className="navbar-brand mx-auto pl-3">
-          <Link route="/">
+          <Link href="/">
             <a className="a-logo">
               {config.logo ? 
                 <img src={config.logo.src} width={config.logo.width} height={config.logo.height} alt={config.title} /> 
@@ -35,7 +35,7 @@ const Navibar = ({ config, cartCount }) => {
         </div>
 
         <div className="ml-auto pr-3">
-          <Link route="/cart">
+          <Link href="/cart">
             <a className="cart">
               <i className="fas fa-shopping-cart fa-lg"></i>
               {cartCount > 0 && <span className="badge">{+cartCount}</span>}
@@ -48,7 +48,7 @@ const Navibar = ({ config, cartCount }) => {
       <AnimateHeight duration={ 500 } height={ icon ? 0 : 'auto' } >
         <div className="navbar-nav">
           {config.header.links.map(({ href, label }, index) => (
-              <Link route={href} key={`navlink-${index}`} >
+              <Link href={href} key={`navlink-${index}`} >
                 <a className="nav-link a-link" onClick={() => setIcon(!icon)}>{label}</a>
               </Link>
           ))}

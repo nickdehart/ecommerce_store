@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 import style from './footer.style'
 
 const Footer = ({config}) => (
@@ -7,12 +7,12 @@ const Footer = ({config}) => (
     <ul>
       {config.footer.links.map(({ href, label }, index) => (
         <li key={`footer-link-${index}`}>
-          <Link route={href}><a className="pill-footer">{label}</a></Link>
+          <Link href={href}><a className="pill-footer">{label}</a></Link>
         </li>
       ))}
     </ul>
     <div>
-      <Link route="/legal">
+      <Link href="/legal">
         <a className="copyright">&copy; {new Date().getFullYear()}, {config.title}</a>
       </Link>
     </div>

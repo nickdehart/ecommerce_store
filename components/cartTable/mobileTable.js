@@ -1,4 +1,4 @@
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 
 const MobileTable = (props) => {
    const [showEdit, setShowEdit] = React.useState(-1);
@@ -14,7 +14,7 @@ const MobileTable = (props) => {
 
    return (
    <>
-      <table className="table mobile-table">
+      <table className="table">
          <thead>
             <tr>
                <th scope="col">Product</th>
@@ -27,7 +27,7 @@ const MobileTable = (props) => {
                <React.Fragment key={`cart-item-${index}`}>
                <tr >
                   <td style={{display: 'flex'}}>
-                     <Link route={`/product/${item.id}`}>
+                     <Link href={`/product/${item.id}`}>
                         <img src={`${config.products[item.number].assets}${config.products[item.number].images[0]}`} 
                            className="img-fluid cart-img mr-3"/>
                      </Link>
@@ -91,48 +91,41 @@ const MobileTable = (props) => {
       </table>
 
    <style jsx>{`
-   @media (max-width: 767px){
-      .cart-img {
-         max-width: 90px;
-         max-height: 90px;
-      }
-      .edit-btn {
-         text-transform: uppercase;
-         color: white;
-         background-color: ${config.theme.color};
-         font-size: small;
-         font-weight: 600;
-         text-align: center;
-         width: 80px;
-         padding: 5px;
-         margin: 5px 5px 5px 0px;
-      }
-      .edit-btn:hover {
-         cursor: pointer;
-      }
-      .submit-btn {
-         text-transform: uppercase;
-         color: white;
-         background-color: ${config.theme.color};
-         font-size: small;
-         font-weight: 600;
-         text-align: center;
-         width: 80px;
-         padding: 5px;
-         margin: 5px 5px 5px 0px;
-         border: 0px;
-      }
-      s {
-         color: red;
-      }
-      p {
-         margin-bottom: 0px;
-      }
+   .cart-img {
+      max-width: 90px;
+      max-height: 90px;
    }
-   @media (min-width: 768px){
-      .mobile-table {
-         display: none;
-      }
+   .edit-btn {
+      text-transform: uppercase;
+      color: white;
+      background-color: ${config.theme.color};
+      font-size: small;
+      font-weight: 600;
+      text-align: center;
+      width: 80px;
+      padding: 5px;
+      margin: 5px 5px 5px 0px;
+   }
+   .edit-btn:hover {
+      cursor: pointer;
+   }
+   .submit-btn {
+      text-transform: uppercase;
+      color: white;
+      background-color: ${config.theme.color};
+      font-size: small;
+      font-weight: 600;
+      text-align: center;
+      width: 80px;
+      padding: 5px;
+      margin: 5px 5px 5px 0px;
+      border: 0px;
+   }
+   s {
+      color: red;
+   }
+   p {
+      margin-bottom: 0px;
    }
    `}</style>
    </>

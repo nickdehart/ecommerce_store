@@ -1,4 +1,4 @@
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 
 const Terms = ({config}) => (
   <div>
@@ -35,7 +35,7 @@ const Terms = ({config}) => (
       <br /> We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.
       <br />
       <br /> <strong>SECTION 5 - PRODUCTS OR SERVICES (if applicable)</strong>
-      <br /> Certain products or services may be available exclusively online through the website. These products or services may have limited quantities and are subject to return or exchange only according to our <Link route="/legal/returns">Return Policy</Link>.
+      <br /> Certain products or services may be available exclusively online through the website. These products or services may have limited quantities and are subject to return or exchange only according to our <Link href="/legal/returns">Return Policy</Link>.
       <br /> We have made every effort to display as accurately as possible the colors and images of our products that appear at the store. We cannot guarantee that your computer monitor's display of any color will be accurate.
       <br /> We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.
       <br /> We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations, or that any errors in the Service will be corrected.
@@ -45,7 +45,7 @@ const Terms = ({config}) => (
       <br />
       <br /> You agree to provide current, complete and accurate purchase and account information for all purchases made at our store. You agree to promptly update your account and other information, including your email address and credit card numbers and expiration dates, so that we can complete your transactions and contact you as needed.
       <br />
-      <br /> For more detail, please review our <Link route="/legal/returns">Return Policy</Link>.
+      <br /> For more detail, please review our <Link href="/legal/returns">Return Policy</Link>.
       <br />
       <br /> <strong>SECTION 7 - OPTIONAL TOOLS</strong>
       <br /> We may provide you with access to third-party tools over which we neither monitor nor have any control nor input.
@@ -64,7 +64,7 @@ const Terms = ({config}) => (
       <br /> You agree that your comments will not violate any right of any third-party, including copyright, trademark, privacy, personality or other personal or proprietary right. You further agree that your comments will not contain libelous or otherwise unlawful, abusive or obscene material, or contain any computer virus or other malware that could in any way affect the operation of the Service or any related website. You may not use a false e‑mail address, pretend to be someone other than yourself, or otherwise mislead us or third-parties as to the origin of any comments. You are solely responsible for any comments you make and their accuracy. We take no responsibility and assume no liability for any comments posted by you or any third-party.
       <br />
       <br /> <strong>SECTION 10 - PERSONAL INFORMATION</strong>
-      <br /> Your submission of personal information through the store is governed by our Privacy Policy. Refer to our <Link route="/legal/privacy">Privacy Policy</Link>.
+      <br /> Your submission of personal information through the store is governed by our Privacy Policy. Refer to our <Link href="/legal/privacy">Privacy Policy</Link>.
       <br />
       <br /> <strong>SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS</strong>
       <br /> Occasionally there may be information on our site or in the Service that contains typographical errors, inaccuracies or omissions that may relate to product descriptions, pricing, promotions, offers, product shipping charges, transit times and availability. We reserve the right to correct any errors, inaccuracies or omissions, and to change or update information or cancel orders if any information in the Service or on any related website is inaccurate at any time without prior notice (including after you have submitted your order).
@@ -104,7 +104,7 @@ const Terms = ({config}) => (
       <br /> We reserve the right, at our sole discretion, to update, change or replace any part of these Terms of Service by posting updates and changes to our website. It is your responsibility to check our website periodically for changes. Your continued use of or access to our website or the Service following the posting of any changes to these Terms of Service constitutes acceptance of those changes.
       <br />
       <br /> <strong>SECTION 20 - CONTACT INFORMATION</strong>
-      <br /> <div>Questions about the Terms of Service should be sent to us via our <Link route="/contact">Contact</Link> page.</div>
+      <br /> <div>Questions about the Terms of Service should be sent to us via our <Link href="/contact">Contact</Link> page.</div>
    </div>
 
     <style jsx>{`

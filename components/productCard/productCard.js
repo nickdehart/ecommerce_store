@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 
 const ProductCard = ({item, config, meta}) => {
    let stars = [];
@@ -16,7 +16,7 @@ const ProductCard = ({item, config, meta}) => {
    }
 
    return (
-   <Link route={`/product/${item.id}`}>
+   <Link href={`/product/${item.id}`}>
       <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 item m-2">
          <img src={`${item.assets}${item.images[0]}`} className="card-img-top" alt={item.name} />
          <div className="card-body">

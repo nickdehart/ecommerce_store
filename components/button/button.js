@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from '../../server/routes'
+import Link from 'next/link';
 import config from '../../config'
 
 class Button extends Component {
@@ -42,7 +42,7 @@ class Button extends Component {
                }
             </>
             :
-            <Link route={href ? href : '/'}>
+            <Link href={href ? href : '/'}>
                <a className={fullWidth ? "custom-style" : "button-style"}>{children}</a>
             </Link>
 
