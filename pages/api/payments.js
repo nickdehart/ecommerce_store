@@ -23,8 +23,12 @@ export default (req, res) => {
          },
          body: JSON.stringify(payload)
       })
-      .then(response => response.status === 200 ? response.json() : res.status(response.status).json( response.body ))
+      .then(response => response.json())
       .then(json => {
+         if(json.errors){
+            res.status(400).json( json )
+            return
+         }
          let connectionString = `${process.env.DB_HOST}`
          if(process.env.DB_USER_NAME && process.env.DB_PASS)
             connectionString = `${process.env.DB_USER_NAME}:${encodeURIComponent(process.env.DB_PASS)}@${process.env.DB_HOST}`

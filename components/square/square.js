@@ -24,6 +24,14 @@ const Square = ({ config, total, billingAddress, cart }) => {
       setErrorMessages(errors.map(error => error.message))
       return
     }
+    Swal.fire({
+      title: 'Processing',
+      html: 'Satellites are linking in outer space...',
+      timerProgressBar: true,
+      onBeforeOpen: () => {
+        Swal.showLoading()
+      }
+    })
  
     setErrorMessages([])
     fetch('/api/payments', {
@@ -44,6 +52,7 @@ const Square = ({ config, total, billingAddress, cart }) => {
     })
     .then(response => {
       if(response && response.status === 200){
+        Swal.close()
         ReactPixel.track('Purchase', {
           value: total,
           currency: 'USD',
@@ -52,6 +61,7 @@ const Square = ({ config, total, billingAddress, cart }) => {
         })
         Router.push('/thanks');
       } else {
+        Swal.close()
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
