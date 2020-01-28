@@ -14,9 +14,7 @@ export default (req, res) => {
             } catch (e) {
                console.error(e)
             }
-            res.status(400).send({
-               message: err
-            });
+            res.status(400).json({ message: err })
          }
 
          const db = client.db(config.default.db.name);
@@ -27,17 +25,14 @@ export default (req, res) => {
             })
             collection.insertOne(req.body)
             client.close()
-            res.status(200).send('success')
+            res.status(200).json({ message: 'success' })
          } catch (e) {
-            res.status(400).send({
-               message: e
-            });
+            res.status(400).json({ message: e })
          }
          
       })
    } else {
-      res.status(404).send({
-         message: 'Not Found'
-      });
+      res.setHeader('Allow', ['POST'])
+      res.status(405).end(`Method ${req.method} Not Allowed`)
    }
 }

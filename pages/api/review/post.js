@@ -14,7 +14,7 @@ const post = (req, res) => {
          } catch (e) {
             console.error(e)
          }
-         res.status(400).send({message: err});
+         res.status(400).json({ message: err })
          return
       }
 
@@ -50,9 +50,9 @@ const post = (req, res) => {
          }
          collection.insertOne(record)
          client.close()
-         res.status(200).send('success')
+         res.status(200).json({ message: 'success' })
       } catch (e) {
-         res.status(400).send({message: err});
+         res.status(400).json({ message: err })
       }
    })
 }

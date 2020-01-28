@@ -14,7 +14,7 @@ export default (req, res) => {
             } catch (e) {
                console.error(e)
             }
-            res.status(400).send({message: err});
+            res.status(400).json({ message: err })
             return
          }
 
@@ -31,16 +31,16 @@ export default (req, res) => {
                .toArray((err, aggs) => {
                   client.close()
                   if(err)
-                     res.status(400).send({message: err});
+                     res.status(400).json({ message: err })
                   if(aggs) {
-                     res.send(aggs)
+                     res.status(200).json(aggs)
                   } else {
-                     res.send([])
+                     res.status(200).json([])
                   }
                })
 
          } catch (e) {
-            res.status(400).send({message: err});
+            res.status(400).json({ message: e })
          }
       })
    }

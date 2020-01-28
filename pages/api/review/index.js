@@ -11,6 +11,7 @@ export default (req, res) => {
    } else if (req.method === 'POST') {
       post(req, res)
    } else {
-      res.status(404).send({message: 'Not Found'});
+      res.setHeader('Allow', ['GET', 'POST'])
+      res.status(405).end(`Method ${req.method} Not Allowed`)
    }
  }

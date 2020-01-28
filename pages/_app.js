@@ -2,13 +2,13 @@ import App from 'next/app'
 import Head from 'next/head'
 import Router from "next/router";
 import withGA from "next-ga";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Nav from '../components/nav';
 import Footer from '../components/footer';
 import Promotion from '../components/promotion';
 
 import config from '../config';
+import './blank.css'
 
 class MyApp extends App {
   constructor(props) {
@@ -38,6 +38,7 @@ class MyApp extends App {
    render() {
      const { Component } = this.props
      const { cartCount } = this.state
+
      return (
        <>
          <Head>

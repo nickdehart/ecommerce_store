@@ -11,6 +11,16 @@ const config = {
    theme: {
       color: '#ee6e73',
    },
+   pixel: {
+      id: 'FACEBOOK_PIXEL_ID',
+      autoConfig: true,
+      debug: true
+   },
+   square: {
+      url: 'https://connect.squareupsandbox.com/v2/payments',
+      app_id: 'SANDBOX_APP_ID',
+      location_id: 'SANDBOX_LOCATION_ID'
+   },
    db: {
       name: 'ecommerce', // name of the database to be used
       contact: 'messages', // collection for contact

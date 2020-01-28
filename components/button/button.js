@@ -34,16 +34,18 @@ class Button extends Component {
       return (
       <React.Fragment>
          { variant == 'button' ?
-            <>
-               { fullWidth ?
-                  <button className="custom-style" type="submit" disabled={disabled}>{children}</button>
-                  :
-                  <button className="button-style" type="submit" disabled={disabled}>{children}</button>
-               }
-            </>
+            <button 
+               className={fullWidth ? "custom-style" : "button-style"} 
+               type="submit" 
+               disabled={disabled}
+            >
+               {children}
+            </button>
             :
             <Link href={href ? href : '/'}>
-               <a className={fullWidth ? "custom-style" : "button-style"}>{children}</a>
+               <a className={fullWidth ? "custom-style" : "button-style"}>
+                  {children}
+               </a>
             </Link>
 
          }

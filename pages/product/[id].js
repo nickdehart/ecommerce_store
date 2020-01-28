@@ -1,9 +1,9 @@
 import Router from 'next/router';
+import ReactPixel from 'react-facebook-pixel';
 
 // import PaypalButton from '../../../components/paypal';
 import Button from '../../components/button/button';
 import Review from '../../components/review';
-import Pixel from '../../components/pixel';
 import Guarantees from '../../components/guarantees/guarantees';
 import Description from '../../components/description/description';
 import NotFound from '../../components/notFound';
@@ -17,13 +17,34 @@ class Product extends React.Component {
       reviews: [],
       meta: [],
       quantity: 1,
-      query: {}
+      query: {},
+      product: null,
     };
   }
 
   componentDidMount() {
+    const { config } = this.props;
     const query = Router.query
-    this.setState({query: query})
+    ReactPixel.init(config.pixel.id, {}, { autoConfig: config.pixel.autoConfig, debug: config.pixel.debug });
+    let product;
+    for(var i = 0; i < config.products.length; i++){
+      if(config.products[i].id === query.id){
+        product = config.products[i];
+        product.number = i;
+        break;
+      }
+    }
+    if(product){
+      ReactPixel.track('ViewContent', {
+        content_name: product.name, 
+        content_category: product.category ? product.category : 'base',
+        content_ids: [product.id],
+        content_type: 'product',
+        value: product.price,
+        currency: 'USD' 
+      });
+    }
+    this.setState({query: query, product: product})
     fetch(`/api/review?id=${query.id}`)
       .then(response => response.json())
       .then(data => {
@@ -68,6 +89,14 @@ class Product extends React.Component {
       quantity: product.quantity
     })
     sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+    ReactPixel.track('AddToCart', {
+      content_name: product.name, 
+      content_category: product.category ? product.category : 'base',
+      content_ids: [product.id],
+      content_type: 'product',
+      value: product.price,
+      currency: 'USD' 
+    });
     Router.push('/cart');
   }
 
@@ -77,16 +106,7 @@ class Product extends React.Component {
 
   render() {
     const { config } = this.props;
-    const { activeIndex, reviews, meta, quantity, query } = this.state;
-
-    let product;
-    for(var i = 0; i < config.products.length; i++){
-      if(config.products[i].id === query.id){
-        product = config.products[i];
-        product.number = i;
-        break;
-      }
-    }
+    const { activeIndex, reviews, meta, quantity, query, product } = this.state;
 
     let stars = [];
     if(meta.length > 0) {
@@ -100,7 +120,6 @@ class Product extends React.Component {
   return (
     product ? 
     <>
-      <Pixel name={product.name ? product.name : 'FACEBOOK_PIXEL_1'} />
       <div className="container product">
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-3" >
           <img className="selected-img" src={`${product.assets}${product.images[activeIndex]}`}></img>

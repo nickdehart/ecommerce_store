@@ -13,7 +13,7 @@ const get = (req, res) => {
          } catch (e) {
             console.error(e)
          }
-         res.status(400).send({message: err});
+         res.status(400).json({ message: err })
          return
       }
 
@@ -26,17 +26,17 @@ const get = (req, res) => {
             { $group: { _id: "$rating", count: { $sum: 1 } } }
          ]).toArray((err, aggs) => {
             if(err)
-               res.status(400).send({message: err});
+               res.status(400).json({ message: err })
             collection.find({'id': req.query.id}).toArray((err, docs) => {
                if(err)
-                  res.status(400).send({message: err});
+                  res.status(400).json({ message: err })
                client.close()
                aggs.push({_id: 0, reviews: docs})
-               res.send(aggs);
+               res.status(200).json(aggs)
             })
          })
       } catch (e) {
-         res.status(400).send({message: err});
+         res.status(400).json({ message: err })
       }
    })
 }

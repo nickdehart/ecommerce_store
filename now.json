@@ -2,7 +2,8 @@
    "build": {
      "env": {
          "USPS_ID": "@usps_id",
-         "DB_HOST": "@db_host"
+         "DB_HOST": "@db_host",
+         "SQUARE_TOKEN": "@square_token"
      }
    }
  }

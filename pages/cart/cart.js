@@ -1,5 +1,5 @@
 import Button from '../../components/button'
-import PaypalButton from '../../components/paypal';
+// import PaypalButton from '../../components/paypal';
 import CartTable from '../../components/cartTable';
 import Guarantees from '../../components/guarantees/guarantees';
 
@@ -9,12 +9,13 @@ class Cart extends React.Component {
     this.state = {
       cart: [],
       total: 0,
-      discountedTotal: 0
+      discountedTotal: 0,
+      pixelData: {}
     };
   }
 
   componentDidMount() {
-    const { cartCount } = this.props;
+    const { config, cartCount } = this.props;
     if(cartCount > 0){
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
       this.setState({cart: cart ? cart : []})
@@ -123,7 +124,7 @@ class Cart extends React.Component {
             discountedTotal={discountedTotal}
           />
           <Guarantees />
-          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto">
+          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-4 mx-auto" >
             <Button href="/checkout" fullWidth>Check Out</Button>
             <Button href="/products" fullWidth invert>Keep Shopping</Button>
             {/* <PaypalButton
@@ -133,6 +134,7 @@ class Cart extends React.Component {
               total={discountedTotal}
             /> */}
           </div>
+
         </div>
       }
 
@@ -144,6 +146,23 @@ class Cart extends React.Component {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+      }
+      .checkout-btn {
+        display: flex; 
+        justify-content: center;
+        width: 100%;
+        background-color: ${config.theme.color};
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 16px;
+        font-weight: 600;
+        white-space: nowrap;
+        border: 2px solid transparent;
+        border-radius: 4px;
+        margin: 17px auto 17px;
+        padding: 14px 0px 14px
       }
       `}</style>
     </>

@@ -1,4 +1,4 @@
-import Router from 'next/router';
+// import Router from 'next/router';
 import Guarantees from '../../components/guarantees/guarantees';
 import Square from '../../components/square/square';
 import AddressForm from '../../components/addressForm';
@@ -6,6 +6,7 @@ import Stepper from '../../components/stepper';
 
 import Swal from 'sweetalert2'
 import convert from 'xml-js';
+import ReactPixel from 'react-facebook-pixel';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -28,9 +29,11 @@ class Checkout extends React.Component {
   }
 
   componentDidMount() {
+      const { config } = this.props;
       let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
       let shippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'))
       let billingAddress = JSON.parse(sessionStorage.getItem('billingAddress'))
+      ReactPixel.init(config.pixel.id, {}, { autoConfig: config.pixel.autoConfig, debug: config.pixel.debug });
       if(shippingAddress && billingAddress){
          this.setState({
             step: 2,
@@ -41,9 +44,9 @@ class Checkout extends React.Component {
          this.setState({step: 1, shippingAddress: shippingAddress})
       }
       this.setState({cart: cart ? cart : []})
-      if(!cart || cart.length === 0){
-         Router.push('/cart');
-      }
+      // if(!cart || cart.length === 0){
+      //    Router.push('/cart');
+      // }
       this.calculateTotals(cart)
   }
 
@@ -52,9 +55,9 @@ class Checkout extends React.Component {
      let cart = JSON.parse(sessionStorage.getItem('shoppingCart'))
      this.setState({cart: cart ? cart : []})
      this.calculateTotals(cart)
-     if (this.props.cartCount === 0) {
-      Router.push('/cart');
-     }
+   //   if (this.props.cartCount === 0) {
+   //    Router.push('/cart');
+   //   }
    }
  }
 
@@ -63,7 +66,11 @@ class Checkout extends React.Component {
     
     let discountedTotal = 0;
     let total = 0;
+    let ids = [];
+    let num_items = 0;
     for(var i = 0; i < cart.length; i++){
+        num_items += cart[i].quantity;
+        ids.push(cart[i].id)
         let price = config.products[cart[i].number].price * cart[i].quantity;
         total += price;
         switch(cart[i].quantity){
@@ -85,6 +92,14 @@ class Checkout extends React.Component {
         }
     }
     this.setState({total: total, discountedTotal: discountedTotal})
+    let pixelData = {
+      content_category: 'base',
+      content_ids: ids,
+      currency: 'USD',
+      num_items: num_items,
+      value: discountedTotal,
+    }
+    ReactPixel.track('InitiateCheckout', pixelData)
   }
 
    handleSubmit = async (e) => {
@@ -266,12 +281,24 @@ class Checkout extends React.Component {
          </>
          }
          {step === 1 &&
+         <>
+            <div className="addressQuestion mx-auto my-3" onClick={() => this.setState({checkedAddress: !checkedAddress, billingAddress: shippingAddress})}>
+               <span>
+                  {
+                     checkedAddress ? <i className="fas fa-check-square" />
+                     :
+                     <i className="far fa-square" />
+                  }
+               </span>
+               Same as Shipping?
+            </div>
             <AddressForm 
                config={config} 
                fields={billingAddress}
                text={`Continue to Payment`} 
                handleSubmit={this.handleSubmit} 
             />
+         </>
          }
          {step === 2 && 
          <>
@@ -283,7 +310,12 @@ class Checkout extends React.Component {
                   <tr><td>{`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.zip5}`}</td></tr>
                </tbody>
             </table>
-            <Square total={parseFloat((discountedTotal + estimatedTax).toFixed(2))}/> 
+            <Square 
+               config={config}
+               total={parseFloat((discountedTotal + estimatedTax).toFixed(2))}
+               billingAddress={billingAddress}
+               cart={cart}
+            /> 
          </>
          }
          {step > 0 &&

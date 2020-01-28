@@ -8,133 +8,152 @@ import SquarePaymentForm, {
  } from 'react-square-payment-form'
 import 'react-square-payment-form/lib/default.css'
 import './square.css'
+import ReactPixel from 'react-facebook-pixel';
+import Router from 'next/router';
+import Swal from 'sweetalert2'
 
-class Square extends React.Component {
+const Square = ({ config, total, billingAddress, cart }) => {
 
-   constructor(props) {
-     super(props)
-     this.state = {
-       errorMessages: [],
-     }
-   }
- 
-   cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
-     if (errors) {
-       this.setState({ errorMessages: errors.map(error => error.message) })
-       return
-     }
- 
-     this.setState({ errorMessages: [] })
-     alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
-   }
+  const [errorMessages, setErrorMessages] = React.useState([]);
+  React.useEffect(() => {
+    ReactPixel.init(config.pixel.id, {}, { autoConfig: config.pixel.autoConfig, debug: config.pixel.debug });
+  }, []) 
 
-   createPaymentRequest() {
-      return {
-        requestShippingAddress: true,
-        requestBillingInfo: true,
-        currencyCode: "USD",
-        countryCode: "US",
-        total: {
-          label: "MERCHANT NAME",
-          amount: "1",
-          pending: false
-        },
-        lineItems: [
-          {
-            label: "Subtotal",
-            amount: "1",
-            pending: false
-          }
-        ]
-      }
+  const cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
+    if (errors) {
+      setErrorMessages(errors.map(error => error.message))
+      return
     }
  
-   createVerificationDetails() {
-     return {
-       amount: '100.00',
-       currencyCode: "USD",
-       intent: "CHARGE",
-       billingContact: {
-         familyName: "Smith",
-         givenName: "John",
-         email: "jsmith@example.com",
-         country: "GB",
-         city: "London",
-         addressLines: ["1235 Emperor's Gate"],
-         postalCode: "SW7 4JA",
-         phone: "020 7946 0532"
-       }
-     }
-   }
- 
-   render() {
-      const { total } = this.props;
-      const loadingView = <div className="sq-wallet-loading"></div>
-      const unavailableView = <div className="sq-wallet-unavailable">Unavailable</div>
+    setErrorMessages([])
+    fetch('/api/payments', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify({
+        source_id: nonce,
+        verification_token: buyerVerificationToken,
+        amount_money: { // amount_money = $1.00
+          amount: parseInt((total * 100).toFixed(0)),
+          currency: "USD"
+        },
+        cart: cart
+      })
+    })
+    .then(response => {
+      if(response && response.status === 200){
+        ReactPixel.track('Purchase', {
+          value: total,
+          currency: 'USD',
+          contents: cart ? cart.map(item => { return { id: item.id, quantity: item.quantity } }) : [],
+          content_type: 'product'
+        })
+        Router.push('/thanks');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: 'Please refresh and try again.'
+        })
+      }
+    })
+  }
 
-     return (
-       <div className="container my-3" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
- 
-         <SquarePaymentForm
-           sandbox={true}
-           applicationId={'sandbox-sq0idb-jN-coRrgOadSZEQsd0hU0Q'}
-           createPaymentRequest={this.createPaymentRequest}
-           cardNonceResponseReceived={this.cardNonceResponseReceived}
-           createVerificationDetails={this.createVerificationDetails}
-           locationId={'0B4C2736GW0A3'}
-         >
-            <GooglePayButton loadingView={loadingView} unavailableView={unavailableView} />
-            <fieldset className="sq-fieldset">
-               <CreditCardNumberInput />
-               <div className="sq-form-third">
-                  <CreditCardExpirationDateInput />
-               </div>
+  const createPaymentRequest = () => {
+    return {
+      requestShippingAddress: true,
+      requestBillingInfo: true,
+      currencyCode: "USD",
+      countryCode: "US",
+      total: {
+        label: config.title,
+        amount: total.toFixed(2),
+        pending: false
+      },
+      lineItems: [
+        {
+          label: "Subtotal",
+          amount: total.toFixed(2),
+          pending: false
+        }
+      ]
+    }
+  }
 
-               <div className="sq-form-third">
-                  <CreditCardPostalCodeInput />
-               </div>
+  const createVerificationDetails = (billingAddress, total) => {
+    let addressLines = [];
+    if(billingAddress.address1 && billingAddress.address2){
+       addressLines.push(billingAddress.address1)
+       addressLines.push(billingAddress.address2)
+    } else if(billingAddress.address2) {
+       addressLines.push(billingAddress.address2)
+    } else if(billingAddress.address1) {
+      addressLines.push(billingAddress.address1)
+    }
+    return {
+      amount: total.toFixed(2),
+      currencyCode: "USD",
+      intent: "CHARGE",
+      billingContact: {
+        familyName: billingAddress.lastName,
+        givenName: billingAddress.firstName,
+        email: billingAddress.email,
+        city: billingAddress.city,
+        addressLines: addressLines,
+        postalCode: billingAddress.zip5,
+      }
+    }
+  }
 
-               <div className="sq-form-third">
-                  <CreditCardCVVInput />
-               </div>
-            </fieldset>
+  const loadingView = <div className="sq-wallet-loading"></div>
+  const unavailableView = <div></div>
 
-            <CreditCardSubmitButton>
-                  Pay ${total}
-            </CreditCardSubmitButton>
-         </SquarePaymentForm>
- 
-         {this.state.errorMessages.length > 0 &&
-            <div className="sq-error-message">
-               {this.state.errorMessages.map(errorMessage =>
-                  <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
-               )}
-            </div>
-         }
-         <style jsx>{`
-         .checkout-input{
-            display: block;
-            margin: 0;
-            width: 100%;
-            border: none;
-            font-size: 16px;
-            font-family: Helvetica Neue;
-            padding: 16px;
-            color: #373F4A;
-            background-color: transparent;
-            line-height: 24px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-         }
-         .input-container{
-            display: flex; 
-            flex-direction: column;
-            margin: 10px auto 10px
-         }
-         `}</style>
-       </div>
-     )
-   }
+  return (
+    <div className="container my-3" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+
+      <SquarePaymentForm
+        sandbox={true}
+        applicationId={config.square.app_id}
+        locationId={config.square.location_id}
+        createPaymentRequest={createPaymentRequest}
+        cardNonceResponseReceived={cardNonceResponseReceived}
+        createVerificationDetails={() => createVerificationDetails(billingAddress, total)}
+      >
+        <GooglePayButton loadingView={loadingView} unavailableView={unavailableView} />
+        <fieldset className="sq-fieldset">
+          <CreditCardNumberInput />
+          <div className="sq-form-third">
+            <CreditCardExpirationDateInput />
+          </div>
+
+          <div className="sq-form-third">
+            <CreditCardPostalCodeInput />
+          </div>
+
+          <div className="sq-form-third">
+            <CreditCardCVVInput />
+          </div>
+        </fieldset>
+
+        <CreditCardSubmitButton>
+              Pay ${total}
+        </CreditCardSubmitButton>
+      </SquarePaymentForm>
+
+      {errorMessages.length > 0 &&
+        <div className="sq-error-message">
+            {errorMessages.map(errorMessage =>
+              <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
+            )}
+        </div>
+      }
+      <style jsx>{`
+      `}</style>
+    </div>
+  )
  }
 
  export default Square
