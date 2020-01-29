@@ -12,7 +12,7 @@ import ReactPixel from 'react-facebook-pixel';
 import Router from 'next/router';
 import Swal from 'sweetalert2'
 
-const Square = ({ config, total, billingAddress, cart }) => {
+const Square = ({ config, total, billingAddress, shippingAddress, cart }) => {
 
   const [errorMessages, setErrorMessages] = React.useState([]);
   React.useEffect(() => {
@@ -47,7 +47,9 @@ const Square = ({ config, total, billingAddress, cart }) => {
           amount: parseInt((total * 100).toFixed(0)),
           currency: "USD"
         },
-        cart: cart
+        cart: cart,
+        billingAddress: billingAddress,
+        shippingAddress: shippingAddress
       })
     })
     .then(response => {
@@ -122,8 +124,8 @@ const Square = ({ config, total, billingAddress, cart }) => {
   const unavailableView = <div></div>
 
   return (
+    <>
     <div className="container my-3" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-
       <SquarePaymentForm
         sandbox={true}
         applicationId={config.square.app_id}
@@ -153,8 +155,9 @@ const Square = ({ config, total, billingAddress, cart }) => {
         </CreditCardSubmitButton>
       </SquarePaymentForm>
 
+      </div>
       {errorMessages.length > 0 &&
-        <div className="sq-error-message">
+        <div className="container sq-error-message">
             {errorMessages.map(errorMessage =>
               <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
             )}
@@ -162,7 +165,7 @@ const Square = ({ config, total, billingAddress, cart }) => {
       }
       <style jsx>{`
       `}</style>
-    </div>
+    </>
   )
  }
 

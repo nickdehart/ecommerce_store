@@ -36,8 +36,10 @@ export default (req, res) => {
             if(err) {
                try {
                   client.close()
+                  res.status(400).json( json )
                } catch (e) {
                   console.error(e)
+                  res.status(400).json( json )
                }
             }
 
@@ -57,14 +59,23 @@ export default (req, res) => {
                   status: 'CREATED',
                   total: req.body.amount_money.amount / 100,
                   items: items,
+                  shippingAddress: req.body.shippingAddress,
+                  billingAddress: req.body.billingAddress,
                   payment: json.payment
                })
                client.close()
             } catch (e) {
                console.error(e)
+               res.status(400).json( json )
             }
          })
          res.status(200).json( json )
+      })
+      .catch((err) => {
+         res.status(500).json({
+            'title': 'Payment Failure',
+            'result': err.response.text
+          });
       })
    } else {
       res.setHeader('Allow', ['POST'])

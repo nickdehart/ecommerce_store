@@ -314,6 +314,7 @@ class Checkout extends React.Component {
                config={config}
                total={parseFloat((discountedTotal + estimatedTax).toFixed(2))}
                billingAddress={billingAddress}
+               shippingAddress={shippingAddress}
                cart={cart}
             /> 
          </>
