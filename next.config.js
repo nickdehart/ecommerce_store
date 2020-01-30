@@ -12,5 +12,6 @@ module.exports = withCSS({
       USPS_ID: process.env.USPS_ID,
       DB_HOST: process.env.DB_HOST,
       SQUARE_TOKEN: process.env.SQUARE_TOKEN
-   }
+   },
+   target: 'serverless'
 })

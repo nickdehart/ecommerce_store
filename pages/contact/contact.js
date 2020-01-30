@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Swal from 'sweetalert2'
 import Button from '../../components/button'
 
@@ -41,6 +42,10 @@ const Contact = ({config}) => {
 
    return (
    <>
+      <Head>
+         <title>{`${config.title} - Contact Us`}</title>
+         <meta name="description" content={`${config.title} - Contact Us`}></meta>
+      </Head>
       <div className="container">
          <h1 className="title">Contact Us</h1>
          <p className="description">

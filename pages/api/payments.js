@@ -36,10 +36,11 @@ export default (req, res) => {
             if(err) {
                try {
                   client.close()
-                  res.status(400).json( json )
+                  console.error(req.body.shippingAddress, req.body.billingAddress)
+                  res.status(200).json( json )
                } catch (e) {
-                  console.error(e)
-                  res.status(400).json( json )
+                  console.error(e, req.body.shippingAddress, req.body.billingAddress)
+                  res.status(200).json( json )
                }
             }
 
@@ -65,8 +66,8 @@ export default (req, res) => {
                })
                client.close()
             } catch (e) {
-               console.error(e)
-               res.status(400).json( json )
+               console.error(e, req.body.shippingAddress, req.body.billingAddress)
+               res.status(200).json( json )
             }
          })
          res.status(200).json( json )

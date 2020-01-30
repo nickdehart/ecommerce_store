@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 import Button from '../../components/button'
 // import PaypalButton from '../../components/paypal';
 import CartTable from '../../components/cartTable';
@@ -106,6 +108,10 @@ class Cart extends React.Component {
 
     return (
     <>
+      <Head>
+        <title>{`${config.title} - Shopping Cart`}</title>
+        <meta name="description" content={`${config.title} - Shopping Cart`}></meta>
+      </Head>
       {cart.length === 0 ?
         <div className="cart-content">
           <p>Your cart is currently empty.</p>

@@ -1,6 +1,11 @@
+import Head from 'next/head'
 
 const Returns = ({config}) => (
   <div>
+      <Head>
+        <title>{`${config.title} - Return Policy`}</title>
+        <meta name="description" content={`${config.title} - Return Policy`}></meta>
+      </Head>
       <h1 className="title add-margin">Returns</h1>
       <div className="container add-margin">
          <br /> Our policy lasts 30 days. If 30 days have gone by since your purchase, unfortunately we can’t offer you a refund or exchange.

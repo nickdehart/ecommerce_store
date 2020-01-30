@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Button from "../../components/button"
 
 const Thanks = ({config, setCartCount}) => {
@@ -8,6 +9,10 @@ const Thanks = ({config, setCartCount}) => {
    }, [])
    return (
    <>
+      <Head>
+        <title>{`${config.title} - Thank You`}</title>
+        <meta name="description" content="Thank you for your payment!"></meta>
+      </Head>
       <div className="outer-container">
          <div>
             <h1>Thank You</h1>

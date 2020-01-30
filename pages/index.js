@@ -1,4 +1,6 @@
+import Head from 'next/head'
 import Swal from 'sweetalert2'
+
 import Button from '../components/button'
 import Guarantees from '../components/guarantees/guarantees';
 
@@ -40,6 +42,10 @@ const Home = ({config}) => {
 
   return (
     <>
+      <Head>
+        <title>{`${config.title} - Home`}</title>
+        <meta name="description" content="Free Shipping on All Orders. Online Home Store for Decor, Gadgets Outdoors and More. Shop myBetterHomeGoods for an ever-changing selection of amazing finds at incredible savings."></meta>
+      </Head>
       {config.home.promo &&
         <div className="banner">
           <p className="promo">{config.home.promo}</p>

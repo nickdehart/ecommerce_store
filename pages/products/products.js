@@ -1,4 +1,4 @@
-
+import Head from 'next/head'
 import ProductCard from '../../components/productCard'
 
 class Products extends React.Component {
@@ -30,6 +30,10 @@ class Products extends React.Component {
 
     return (
       <>
+        <Head>
+          <title>{`${config.title} - Products`}</title>
+          <meta name="description" content="Peruse our diverse selection of home products!"></meta>
+        </Head>
         <div className="container col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 my-4 mx-auto">
           <form onSubmit={this.handleSubmit}>
             <div className="input-group mb-3">

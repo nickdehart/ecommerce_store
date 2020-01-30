@@ -1,7 +1,12 @@
 import Link from 'next/link';
+import Head from 'next/head'
 
 const Terms = ({config}) => (
   <div>
+   <Head>
+      <title>{`${config.title} - Terms of Service`}</title>
+      <meta name="description" content={`${config.title} - Terms of Service`}></meta>
+   </Head>
    <h1 className="title add-margin">Terms of Service</h1>
    <div className="container add-margin">
       <strong>OVERVIEW</strong>

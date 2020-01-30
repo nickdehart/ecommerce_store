@@ -4,6 +4,7 @@ import Square from '../../components/square/square';
 import AddressForm from '../../components/addressForm';
 import Stepper from '../../components/stepper';
 
+import Head from 'next/head'
 import Swal from 'sweetalert2'
 import convert from 'xml-js';
 import ReactPixel from 'react-facebook-pixel';
@@ -198,6 +199,10 @@ class Checkout extends React.Component {
 
     return (
       <div className="container my-4">
+         <Head>
+            <title>{`${config.title} - Checkout`}</title>
+            <meta name="description" content={`${config.title} - Checkout`}></meta>
+         </Head>
          <table className="table table-width mx-auto">
             <thead>
                <tr>

@@ -1,6 +1,11 @@
+import Head from 'next/head'
 
 const Privacy = ({config}) => (
   <div>
+   <Head>
+      <title>{`${config.title} - Privacy Policy`}</title>
+      <meta name="description" content={`${config.title} - Privacy Policy`}></meta>
+   </Head>
    <h1 className="title add-margin">Privacy Policy</h1>
    <div className="container add-margin">
       This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase.
