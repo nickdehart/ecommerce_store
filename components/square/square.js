@@ -127,14 +127,14 @@ const Square = ({ config, total, billingAddress, shippingAddress, cart }) => {
     <>
     <div className="container my-3" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <SquarePaymentForm
-        sandbox={true}
+        sandbox={config.square.url.includes('sandbox') ? true : false}
         applicationId={config.square.app_id}
         locationId={config.square.location_id}
         createPaymentRequest={createPaymentRequest}
         cardNonceResponseReceived={cardNonceResponseReceived}
         createVerificationDetails={() => createVerificationDetails(billingAddress, total)}
       >
-        <GooglePayButton loadingView={loadingView} unavailableView={unavailableView} />
+        {/* <GooglePayButton loadingView={loadingView} unavailableView={unavailableView} /> */}
         <fieldset className="sq-fieldset">
           <CreditCardNumberInput />
           <div className="sq-form-third">
