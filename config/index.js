@@ -11,6 +11,7 @@ const config = {
    theme: {
       color: '#ee6e73',
    },
+   googleAnalytics: '',
    pixel: {
       id: 'FACEBOOK_PIXEL_ID',
       autoConfig: true,

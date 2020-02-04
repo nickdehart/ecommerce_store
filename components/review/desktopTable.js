@@ -26,7 +26,7 @@ const ReviewDesktopTable = ({dataObj, items, getStars}) => {
                         </td>
                         <td>
                            {dataObj[0].reviews[item].images[0] &&
-                              <img src={dataObj[0].reviews[item].images[0]} className="img-max" />
+                              <img src={require(dataObj[0].reviews[item].images[0])} className="img-max" />
                            }
                         </td>
                      </tr>

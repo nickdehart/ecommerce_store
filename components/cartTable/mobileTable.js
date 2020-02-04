@@ -28,7 +28,7 @@ const MobileTable = (props) => {
                <tr >
                   <td style={{display: 'flex'}}>
                      <Link href={`/product/${item.id}`}>
-                        <img src={`${config.products[item.number].assets}${config.products[item.number].images[0]}`} 
+                        <img src={require(`../../public${config.products[item.number].assets}${config.products[item.number].images[0]}`)} 
                            className="img-fluid cart-img mr-3"/>
                      </Link>
                      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>

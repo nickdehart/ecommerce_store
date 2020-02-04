@@ -26,7 +26,7 @@ const Navibar = ({ config, cartCount }) => {
           <Link href="/">
             <a className="a-logo">
               {config.logo ? 
-                <img src={config.logo.src} width={config.logo.width} height={config.logo.height} alt={config.title} /> 
+                <img src={require(`../../public${config.logo.src}`)} width={config.logo.width} height={config.logo.height} alt={config.title} /> 
                 :
                 config.title
               }

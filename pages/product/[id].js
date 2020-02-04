@@ -122,13 +122,13 @@ class Product extends React.Component {
     <>
       <div className="container product">
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-3" >
-          <img className="selected-img" src={`${product.assets}${product.images[activeIndex]}`}></img>
+          <img className="selected-img" src={require(`../../public${product.assets}${product.images[activeIndex]}`)}></img>
           <div className="thumbnail-container">
             {product.images.map((item, index) => {
               return(
                 <img 
                   key={`thumbnail-${index}`} 
-                  src={`${product.assets}${item}`} 
+                  src={require(`../../public${product.assets}${item}`)} 
                   onClick={() => this.setState({ activeIndex: index })}
                   className={`mx-2 p-2 thumbnail-img ${activeIndex === index && 'thumbnail-selected'}`} 
                 />
@@ -197,7 +197,7 @@ class Product extends React.Component {
       {product.demo && 
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mx-auto my-3">
           <img 
-            src={`${product.assets}${product.demo}`} 
+            src={require(`../../public${product.assets}${product.demo}`)} 
             className="rounded mx-auto d-block"
             style={{maxWidth: '100%'}}
             />

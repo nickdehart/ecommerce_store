@@ -20,7 +20,7 @@ const ReviewMobileTable = ({dataObj, items, getStars}) => {
                         </td>
                         {dataObj[0].reviews[item].images[0] &&
                            <td colSpan={1}>
-                              <img src={dataObj[0].reviews[item].images[0]} className="img-max-mobile" />
+                              <img src={require(dataObj[0].reviews[item].images[0])} className="img-max-mobile" />
                            </td>
                         }
                      </tr>

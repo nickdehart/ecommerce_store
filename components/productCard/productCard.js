@@ -18,7 +18,7 @@ const ProductCard = ({item, config, meta}) => {
    return (
    <Link href={`/product/${item.id}`}>
       <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 item m-2">
-         <img src={`${item.assets}${item.images[0]}`} className="card-img-top" alt={item.name} />
+         <img src={require(`../../public${item.assets}${item.images[0]}`)} className="card-img-top" alt={item.name} />
          <div className="card-body">
             <div>
                <h5 className="card-title">{item.name}</h5>

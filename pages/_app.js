@@ -55,4 +55,4 @@ class MyApp extends App {
    }
  }
 
-export default withGA("UA-157025431-1", Router)(MyApp);
+export default withGA(config.googleAnalytics, Router)(MyApp);
