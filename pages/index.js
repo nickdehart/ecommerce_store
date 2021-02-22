@@ -1,83 +1,93 @@
-import Head from 'next/head'
-import Swal from 'sweetalert2'
+import Head from "next/head";
+import React from "react";
+import Swal from "sweetalert2";
 
-import Button from '../components/button'
-import Guarantees from '../components/guarantees/guarantees';
+import Button from "../components/button";
+import Guarantees from "../components/guarantees/guarantees";
 
-const Home = ({config}) => {
-
+const Home = ({ config }) => {
   const [disable, setDisable] = React.useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    fetch('/api/subscribe', {
-       method: 'POST',
-       headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json'
-       }, 
-       body: JSON.stringify({
-            email: e.target.email.value,
-            date: new Date()
-          })
-       })
-       .then(response => {
-          if(response.status === 200){
-            Swal.fire(
-              'Success!',
-              'Thank you for subscribing.',
-              'success'
-            )
-            setDisable(true)
-          } else
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: 'Please refresh and try again.'
-            })
-       })
-       .catch(error => console.error(error))
-  }
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: e.target.email.value,
+        date: new Date()
+      })
+    })
+      .then(response => {
+        if (response.status === 200) {
+          Swal.fire("Success!", "Thank you for subscribing.", "success");
+          setDisable(true);
+        } else
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "Please refresh and try again."
+          });
+      })
+      .catch(error => console.error(error));
+  };
 
   return (
     <>
       <Head>
         <title>{`${config.title} - Home`}</title>
-        <meta name="description" content="Free Shipping on All Orders. Online Home Store for Decor, Gadgets Outdoors and More. Shop myBetterHomeGoods for an ever-changing selection of amazing finds at incredible savings."></meta>
+        <meta
+          name="description"
+          content="Free Shipping on All Orders. Online Home Store for Decor, Gadgets Outdoors and More. Shop myBetterHomeGoods for an ever-changing selection of amazing finds at incredible savings."
+        ></meta>
       </Head>
-      {config.home.promo &&
+      {config.home.promo && (
         <div className="banner">
           <p className="promo">{config.home.promo}</p>
-          {config.home.reason && <p className="promo-sub">{config.home.reason}</p>}
+          {config.home.reason && (
+            <p className="promo-sub">{config.home.reason}</p>
+          )}
           <p className="promo-sub">IN EFFECT NOW!</p>
           <Button href="/products">Shop Now</Button>
         </div>
-      }
+      )}
       <div className="container">
-          {config.home.showSubscribe &&
-            <div className="subscribe">
-              <p className="sub-header">
-                Subscribe to our newsletter
-              </p>
-              <p style={{textAlign: 'center'}}>Sign up to our newsletter for promotions and savings!</p>
-              <form onSubmit={handleSubmit} className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-6 mx-auto">
-                <div className="input-group mb-3">
-                  <input
-                    className="form-control"
-                    placeholder="Email Address"
-                    name="email"
-                    type="email"
-                    required
-                  />
-                  <div className="input-group-append">
-                    <button className="sub-button" type="submit" disabled={disable}>Subscribe</button>
-                  </div>
+        {config.home.showSubscribe && (
+          <div className="subscribe">
+            <p className="sub-header">Subscribe to our newsletter</p>
+            <p style={{ textAlign: "center" }}>
+              Sign up to our newsletter for promotions and savings!
+            </p>
+            <form
+              onSubmit={handleSubmit}
+              className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-6 mx-auto"
+            >
+              <div className="input-group mb-3">
+                <input
+                  className="form-control"
+                  placeholder="Email Address"
+                  name="email"
+                  type="email"
+                  required
+                />
+                <div className="input-group-append">
+                  <button
+                    className="sub-button"
+                    type="submit"
+                    disabled={disable}
+                  >
+                    Subscribe
+                  </button>
                 </div>
-              </form>
-            </div>
-          }
-          <Guarantees />
+              </div>
+            </form>
+          </div>
+        )}
+        <Guarantees />
       </div>
 
       <style jsx>{`
@@ -89,7 +99,7 @@ const Home = ({config}) => {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          align-items: center
+          align-items: center;
         }
         .promo {
           font-size: 3em;
@@ -129,11 +139,11 @@ const Home = ({config}) => {
           border: 0px;
         }
         .sub-button:disabled {
-          background: #dddddd
+          background: #dddddd;
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
